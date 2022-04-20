@@ -15,4 +15,6 @@
     <link rel="stylesheet" href="assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="./public/style.css">
 </head>

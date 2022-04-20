@@ -24,23 +24,25 @@
     if (isset($_POST['register'])) {
         $em_name = $_POST['em_name'];
         $em_email = $_POST['em_email'];
+        $em_phone = $_POST['em_phone'];
         $em_password = $_POST['em_password'];
         $em_password = md5($em_password);
         $em_pass_confirm = $_POST['em_pass_confirm'];
         $em_pass_confirm = md5($em_pass_confirm);
 
         // Validation Check
-        if (empty($em_name) || empty($em_email) || empty($em_password) || empty($em_pass_confirm)) {
-            $error =  "Please Fill all required fields!";
+        if (empty($em_name) || empty($em_email) || empty($em_phone) || empty($em_password) || empty($em_pass_confirm)) {
+            $error = "Please Fill all required fields!";
         }else {
             if ($em_password !== $em_pass_confirm) {
-                $pass_error =  "Password and Confirm Password doesn't match";
+                $pass_error = "Password and Confirm Password doesn't match";
             }else {
-                create($em_name, $em_email, $em_password);
+                create($em_name, $em_email, $em_phone, $em_password);
             }
         }
     }
 ?>
+
 <body class="hold-transition register-page">
     <div class="register-box">
         <div class="card card-outline card-primary">
@@ -51,11 +53,11 @@
                 <p class="login-box-msg">Register a new membership</p>
                 <?php 
                     if($error){ ?>
-                        <div class="alert alert-danger" role="alert"><?php echo $error; ?></div>
-                    <?php }
+                <div class="alert alert-danger" role="alert"><?php echo $error; ?></div>
+                <?php }
                     if($pass_error){ ?>
-                        <div class="alert alert-danger" role="alert"><?php echo $pass_error; ?></div>
-                    <?php }
+                <div class="alert alert-danger" role="alert"><?php echo $pass_error; ?></div>
+                <?php }
                     if ($_SESSION['message']) {
                         session_start();
                         echo $_SESSION['message']; 
@@ -65,7 +67,8 @@
                 ?>
                 <form method="post">
                     <div class="input-group mb-3">
-                        <input name="em_name" type="text" class="form-control" placeholder="Full name" value="<?php echo $em_name ?>">
+                        <input name="em_name" type="text" class="form-control" placeholder="Full name"
+                            value="<?php echo $em_name ?>">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
@@ -73,10 +76,20 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input name="em_email" type="email" class="form-control" placeholder="Email" value="<?php echo $em_email ?>">
+                        <input name="em_email" type="email" class="form-control" placeholder="Email"
+                            value="<?php echo $em_email ?>">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input name="em_phone" type="text" class="form-control" placeholder="Phone"
+                            value="<?php echo $em_phone ?>">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-phone"></span>
                             </div>
                         </div>
                     </div>
@@ -89,7 +102,8 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input name="em_pass_confirm" type="password" class="form-control" placeholder="Retype password">
+                        <input name="em_pass_confirm" type="password" class="form-control"
+                            placeholder="Retype password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>

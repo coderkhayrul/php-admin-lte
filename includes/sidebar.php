@@ -149,7 +149,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="index.php" class="nav-link text-danger">
+                    <a href="#" class="nav-link text-danger">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
                         <p class="text-uppercase">Logout</p>
                     </a>

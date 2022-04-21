@@ -50,13 +50,41 @@ function employee(){
 }
 
 // Employee Insert 
-function insert($em_name, $em_email, $em_phone, $em_branch, $em_designation, $em_nid , $em_salary, $em_join_date, $em_password){
+function emp_insert($em_name, $em_email, $em_phone, $em_branch, $em_designation, $em_nid , $em_salary, $em_join_date, $em_address, $em_password){
     global $db;
-    $command = "INSERT INTO tbl_employee(em_name, em_email, em_phone, em_branch, em_designation, em_nid, em_salary, em_join_date, em_password)VALUES ('$em_name', '$em_email', '$em_phone', '$em_branch', '$em_designation', '$em_nid ', '$em_salary', '$em_join_date', '$em_password')";
+    $command = "INSERT INTO tbl_employee(em_name, em_email, em_phone, em_branch, em_designation, em_nid, em_salary, em_join_date, em_address, em_password)VALUES ('$em_name', '$em_email', '$em_phone', '$em_branch', '$em_designation', '$em_nid ', '$em_salary', '$em_join_date', '$em_address', '$em_password')";
     $insert = $db->query($command);
     if ($insert) {
         return $_SESSION['message'] = "<div class='alert alert-success' role='alert'>Employee Create Successfully</div>";
     }else{
         return $_SESSION['message'] = "<div class='alert alert-danger' role='alert'>Employee Create Failed!</div>";
+    }
+}
+
+// Single Employee Show
+function emp_show($em_id){
+    global $db;
+	$command ="SELECT *FROM tbl_employee WHERE em_id='$em_id'";
+	$employee = $db->query($command);
+	return $employee;
+}
+
+// Employee Edit
+function emp_edit($em_id){
+    global $db;
+	$command ="SELECT *FROM tbl_employee WHERE em_id='$em_id'";
+	$employee = $db->query($command);
+	return $employee;
+}
+
+// Employee Update
+function emp_update($em_name, $em_email, $em_phone, $em_branch, $em_designation, $em_nid, $em_salary, $em_join_date,$em_address, $em_id){
+    global $db;
+    $command = "UPDATE tbl_employee SET em_name='$em_name', em_email='$em_email', em_phone='$em_phone', em_branch='$em_branch', em_designation='$em_designation', em_nid='$em_nid', em_salary='$em_salary', em_join_date='$em_join_date', em_address='$em_address' WHERE em_id='$em_id'";
+    $update = $db->query($command);
+    if ($update) {
+        return $_SESSION['message'] = "<div class='alert alert-success' role='alert'>Employee Update Successfully</div>";
+    }else{
+        return $_SESSION['message'] = "<div class='alert alert-danger' role='alert'>Employee Update Failed!</div>";
     }
 }

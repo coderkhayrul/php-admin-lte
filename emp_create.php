@@ -45,15 +45,14 @@
                             $em_nid = $_POST['em_nid'];
                             $em_salary = $_POST['em_salary'];
                             $em_join_date = $_POST['em_join_date'];
+                            $em_address = $_POST['em_address'];
                             $em_password = $_POST['em_password'];
                             $em_password = md5($em_password);
-
                             if (empty($em_name) || empty($em_email) || empty($em_phone) || empty($em_branch) || empty($em_designation) || empty($em_nid) || empty($em_join_date) || empty($em_password)) {
                                 echo "<div class='alert alert-danger' role='alert'>Please Fill all required fields!</div>";
                             }else {
-                                insert($em_name, $em_email, $em_phone, $em_branch, $em_designation, $em_nid, $em_salary, $em_join_date, $em_password);
+                                emp_insert($em_name, $em_email, $em_phone, $em_branch, $em_designation, $em_nid, $em_salary, $em_join_date,$em_address , $em_password);
                             }
-
                         }
                         if ($_SESSION['message']) {
                             session_start();
@@ -115,6 +114,12 @@
                                 <div class="form-group">
                                     <label for="em_join_date" class="control-label">JOIN DATE</label>
                                     <input type="date" class="form-control" name="em_join_date" placeholder="Enter Join Date">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="em_address" class="control-label">Address</label>
+                                    <input type="text" class="form-control" name="em_address" placeholder="Enter Address">
                                 </div>
                             </div>
                             <div class="col-6">

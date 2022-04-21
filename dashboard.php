@@ -1,8 +1,9 @@
 <!-- Header -->
-<?php include './includes/header.php'; ?>
-
-<?php include './includes/topbar.php'; ?>
-<?php include './includes/sidebar.php'; ?>
+<?php 
+include './includes/header.php';
+include './includes/topbar.php';
+include './includes/sidebar.php';
+?>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">

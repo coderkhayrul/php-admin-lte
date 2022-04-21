@@ -29,7 +29,13 @@ function get_login($em_email, $em_password) {
     $command = "SELECT * FROM tbl_employee WHERE em_email = '$em_email' OR  em_phone = '$em_email' AND em_password = '$em_password' AND em_status = '1'";
     $login_info = $db->query($command);
     if ($login_info->num_rows > 0) {
-        header('location: dashboard.php');
+        while ($data = $login_info->fetch_assoc()) {
+            $_SESSION['auth_id'] = $data['em_id'];
+            $_SESSION['auth_name'] = $data['em_name'];
+            $_SESSION['auth_branch'] = $data['em_branch'];
+            $_SESSION['auth_designation'] = $data['em_designation'];
+            header('location: dashboard.php');
+        }
     }else {
         return "<div class='alert alert-danger' role='alert'>Login Failed!</div>";
     }

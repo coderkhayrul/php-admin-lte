@@ -36,7 +36,7 @@
             $em_password = md5($em_password);
 
             if (empty($em_email) || empty($em_password)) {
-              echo $error = "Please Fill all required fields!";
+              echo $error = "<div class='alert alert-danger' role='alert'>Please Fill all required fields!</div>";
             }else {
               $login_message = get_login($em_email, $em_password);
               echo $login_message;

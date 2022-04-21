@@ -32,27 +32,9 @@
     <!-- <script src="assets/dist/js/demo.js"></script> -->
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="assets/dist/js/pages/dashboard2.js"></script>
-    <!-- Steet alert2 -->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Custom Script -->
     <script src="./public/script.js"></script>
-    <!-- Notifications -->
-    <script>
-    <?php
-        if (isset($_SESSION['title']) && isset($_SESSION['text']) && isset($_SESSION['icon'])) { ?>
-        swal({
-            title: "<?php echo $_SESSION['title'] ?>",
-            text: "<?php  echo $_SESSION['text'] ?>",
-            icon: "<?php  echo $_SESSION['icon'] ?>",
-            button: "Ok",
-        });
-        <?php
-            unset($_SESSION['title']);
-            unset($_SESSION['text']);
-            unset($_SESSION['icon']);
-        } ?>
-        
-    </script>
+
     </body>
 
     </html>

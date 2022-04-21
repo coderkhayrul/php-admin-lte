@@ -46,27 +46,27 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
-                            Users</p>
+                            Employee
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
+                            <a href="employee.php" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Employee List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="em_create.php" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Employee Add</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Roles</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>User List</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>User Add</p>
                             </a>
                         </li>
                     </ul>
@@ -135,9 +135,7 @@
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon far fa-image"></i>
-                        <p>
-                            Purchase Reports
-                        </p>
+                        <p>Purchase Reports</p>
                     </a>
                 </li>
 

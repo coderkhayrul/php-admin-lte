@@ -9,6 +9,7 @@ $dbName= 'php_stock';
 
 $db = new mysqli($host, $userName, $password, $dbName);
 
+// Employee Register Function
 function create($em_name, $em_email, $em_phone, $em_password){
     global $db;
 
@@ -22,6 +23,7 @@ function create($em_name, $em_email, $em_phone, $em_password){
     }
 }
 
+// Employee Login Function
 function get_login($em_email, $em_password) {
     global $db;
     $command = "SELECT * FROM tbl_employee WHERE em_email = '$em_email' OR  em_phone = '$em_email' AND em_password = '$em_password' AND em_status = '1'";
@@ -31,6 +33,17 @@ function get_login($em_email, $em_password) {
     }else {
         return "<div class='alert alert-danger' role='alert'>Login Failed!</div>";
     }
+}
 
+// Get All Employee
+function employee(){
+    global $db;
+	$command ="SELECT * FROM tbl_employee";
+	$employee = $db->query($command);
+	return $employee;
+}
+
+// Single Employee Show
+function get_employee($id){
 
 }

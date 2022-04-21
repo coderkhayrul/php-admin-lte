@@ -34,7 +34,6 @@
                 </div>
                 <div class="card-body">
                     <?php
-                    include "./database/function.php";
                     // Update Employee Data
                     if (isset($_POST['updateEmployee'])) {
                         $em_name = $_POST['em_name'];
@@ -53,13 +52,9 @@
                             $em_id=$_GET["id"];
                             emp_update($em_name, $em_email, $em_phone, $em_branch, $em_designation, $em_nid, $em_salary, $em_join_date,$em_address, $em_id);
                         }
-                        if ($_SESSION['message']) {
-                            echo $_SESSION['message'];
-                            unset($_SESSION['message']);
-                        }
-                        
                     }
 
+                    
                     // Get Employee Data
                     if (isset($_GET['id'])) {
                         $em_id = $_GET['id'];

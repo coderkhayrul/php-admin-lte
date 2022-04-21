@@ -36,6 +36,12 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
+                            <?php
+                                if ($_SESSION['message']) {
+                                    echo $_SESSION['message'];
+                                    unset($_SESSION['message']);
+                                }
+                            ?>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -50,7 +56,13 @@
                                 </thead>
                                 <tbody>
                                 <?php 
-                                    include 'database/function.php';
+                                    // Delete Employee
+                                    if (isset($_GET["id"])) {
+                                        $id=$_GET['id'];
+                                        emp_destroy($id);
+                                    }
+
+
                                     $employee = employee();
                                     $sl=1;
                                     if ($employee->num_rows>0) {
@@ -73,9 +85,31 @@
                                                 <td class="text-center">
                                                     <a href="emp_show.php?id=<?php echo $data['em_id'] ?>" class="btn btn-sm btn-success"><i class="far fa-eye"></i></a>
                                                     <a href="emp_edit.php?id=<?php echo $data['em_id'] ?>" class="btn btn-sm btn-primary"><i class="far fa-edit"></i></a>
-                                                    <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                                                    <button data-toggle="modal" data-target="#delete<?php echo $data["em_id"] ?>" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="delete<?php echo $data["em_id"] ?>" tabindex="-1"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Confirmation Message</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure want to delte this User?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                            <a href="employee.php?id=<?php echo $data['em_id']?>" type="button" class="btn btn-danger"
+                                                                name="delete">Confirm</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         <?php }
                                     }
                                 ?>
@@ -100,5 +134,6 @@
     </section>
     <!-- /.content -->
 </div>
+
 <!-- /.content-wrapper -->
 <?php include './includes/footer.php'; ?>

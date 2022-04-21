@@ -10,31 +10,46 @@
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
+
     <!-- jQuery -->
     <script src="assets/plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap -->
+    <!-- Bootstrap 4 -->
     <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- overlayScrollbars -->
-    <script src="assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="assets/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <!-- Toastr -->
+    <script src="assets/plugins/toastr/toastr.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="assets/dist/js/adminlte.js"></script>
-
-    <!-- PAGE PLUGINS -->
-    <!-- jQuery Mapael -->
-    <script src="assets/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-    <script src="assets/plugins/raphael/raphael.min.js"></script>
-    <script src="assets/plugins/jquery-mapael/jquery.mapael.min.js"></script>
-    <script src="assets/plugins/jquery-mapael/maps/usa_states.min.js"></script>
-    <!-- ChartJS -->
-    <script src="assets/plugins/chart.js/Chart.min.js"></script>
-
+    <script src="assets/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <!-- <script src="assets/dist/js/demo.js"></script> -->
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="assets/dist/js/pages/dashboard2.js"></script>
+    <!-- Page specific script -->
     <!-- Custom Script -->
     <script src="./public/script.js"></script>
-
+    <script>
+        <?php 
+        if ($_SESSION['success_message']) { ?>
+            Command: toastr["success"]("<?php echo $_SESSION['success_message']; unset($_SESSION['success_message'])?>");
+        <?php } ?>
+    toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+    }
+    </script>
     </body>
 
     </html>

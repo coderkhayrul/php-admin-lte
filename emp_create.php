@@ -34,7 +34,7 @@
                 </div>
                 <div class="card-body">
                     <?php
-                        include "./database/function.php";
+                        // include "./database/function.php";
                         if (isset($_POST['saveEmployee'])) {
 
                             $em_name = $_POST['em_name'];
@@ -53,11 +53,6 @@
                             }else {
                                 emp_insert($em_name, $em_email, $em_phone, $em_branch, $em_designation, $em_nid, $em_salary, $em_join_date,$em_address , $em_password);
                             }
-                        }
-                        if ($_SESSION['message']) {
-                            session_start();
-                            echo $_SESSION['message'];
-                            unset($_SESSION['message']);
                         }
                     ?>
                     <form method="post" >
@@ -140,6 +135,6 @@
     </section>
     <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
 
+<!-- /.content-wrapper -->
 <?php include './includes/footer.php'; ?>

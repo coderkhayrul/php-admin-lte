@@ -1,7 +1,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="#" class="brand-link">
         <img src="assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
             style="opacity: .8">
         <span class="brand-text font-weight-light">Admin Panel</span>
@@ -96,60 +96,11 @@
                     </ul>
                 </li>
 
+                <li class="nav-header">General</li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-wallet"></i>
-                        <p>
-                            Expense
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Expense Category</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Expense List</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Expense Add</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-header">Reports</li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-calendar-alt"></i>
-                        <p>Product reports</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon far fa-image"></i>
-                        <p>Purchase Reports</p>
-                    </a>
-                </li>
-
-                <li class="nav-header"></li>
-                <li class="nav-item">
-                    <a href="blank.php" class="nav-link text-primary">
-                        <i class="nav-icon fas fa-file"></i>
-                        <p class="text-uppercase">Blank</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="logout.php" class="nav-link text-danger">
-                        <i class="nav-icon fas fa-sign-out-alt"></i>
-                        <p class="text-uppercase">Logout</p>
+                    <a href="logout.php" class="nav-link">
+                        <i class="nav-icon fas fa-sign-out-alt text-danger"></i>
+                        <p>Logout</p>
                     </a>
                 </li>
             </ul>

@@ -55,9 +55,9 @@ function emp_insert($em_name, $em_email, $em_phone, $em_branch, $em_designation,
     $command = "INSERT INTO tbl_employee(em_name, em_email, em_phone, em_branch, em_designation, em_nid, em_salary, em_join_date, em_address, em_password)VALUES ('$em_name', '$em_email', '$em_phone', '$em_branch', '$em_designation', '$em_nid ', '$em_salary', '$em_join_date', '$em_address', '$em_password')";
     $insert = $db->query($command);
     if ($insert) {
-        return $_SESSION['message'] = "<div class='alert alert-success' role='alert'>Employee Create Successfully</div>";
+        $_SESSION['success_message'] = "Employee Create Successfully";
     }else{
-        return $_SESSION['message'] = "<div class='alert alert-danger' role='alert'>Employee Create Failed!</div>";
+        $_SESSION['error_message'] = "Employee Create Failed!";
     }
 }
 
@@ -83,8 +83,19 @@ function emp_update($em_name, $em_email, $em_phone, $em_branch, $em_designation,
     $command = "UPDATE tbl_employee SET em_name='$em_name', em_email='$em_email', em_phone='$em_phone', em_branch='$em_branch', em_designation='$em_designation', em_nid='$em_nid', em_salary='$em_salary', em_join_date='$em_join_date', em_address='$em_address' WHERE em_id='$em_id'";
     $update = $db->query($command);
     if ($update) {
-        return $_SESSION['message'] = "<div class='alert alert-success' role='alert'>Employee Update Successfully</div>";
+        $_SESSION['success_message'] = "Employee Update Successfully";
     }else{
-        return $_SESSION['message'] = "<div class='alert alert-danger' role='alert'>Employee Update Failed!</div>";
+        $_SESSION['error_message'] = "Employee Update Failed!";
+    }
+}
+
+// Employee Delete
+function emp_destroy($em_id){
+	global $db;
+	$command="DELETE FROM tbl_employee WHERE em_id='$em_id'";
+	$delete=$db->query($command);
+	if ($delete) {
+        $_SESSION['success_message'] = "Employee Delete Successfully";
+        header("Location: employee.php");
     }
 }

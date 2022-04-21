@@ -34,7 +34,6 @@
                 </div>
                 <div class="card-body">
                     <?php
-                        include "./database/function.php";
                         if (isset($_GET['id'])) {
                             $em_id = $_GET['id'];
                             $employee = emp_show($em_id);

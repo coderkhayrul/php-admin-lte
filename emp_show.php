@@ -37,7 +37,8 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="form-group">
-                                
+                                <label for="branch">Branch Name</label>
+                                <input type="text" class="form-control" name="branch_name">
                             </div>
                         </div>
                         <!-- /.card-body -->

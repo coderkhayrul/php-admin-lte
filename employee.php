@@ -32,7 +32,7 @@
                     <div class="card">
                         <div class="card-header d-flex bg-info">
                             <h4 class="text-uppercase">All Employee</h4>
-                            <a href="#" class="btn btn-sm btn-primary ml-auto text-uppercase"><i class="fas fa-plus"></i> Employee</a>
+                            <a href="emp_create.php" class="btn btn-sm btn-primary ml-auto"><i class="fas fa-plus"></i> Add Employee</a>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">

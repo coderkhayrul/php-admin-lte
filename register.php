@@ -37,7 +37,7 @@
             if ($em_password !== $em_pass_confirm) {
                 $pass_error = "Password and Confirm Password doesn't match";
             }else {
-                create($em_name, $em_email, $em_phone, $em_password);
+                register($em_name, $em_email, $em_phone, $em_password);
             }
         }
     }

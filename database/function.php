@@ -10,7 +10,7 @@ $dbName= 'php_stock';
 $db = new mysqli($host, $userName, $password, $dbName);
 
 // Employee Register Function
-function create($em_name, $em_email, $em_phone, $em_password){
+function register($em_name, $em_email, $em_phone, $em_password){
     global $db;
 
     $command = "INSERT INTO tbl_employee(em_name, em_email, em_phone, em_password)VALUES ('$em_name', '$em_email', '$em_phone', '$em_password')";
@@ -49,7 +49,14 @@ function employee(){
 	return $employee;
 }
 
-// Single Employee Show
-function get_employee($id){
-
+// Employee Insert 
+function insert($em_name, $em_email, $em_phone, $em_branch, $em_designation, $em_nid , $em_salary, $em_join_date, $em_password){
+    global $db;
+    $command = "INSERT INTO tbl_employee(em_name, em_email, em_phone, em_branch, em_designation, em_nid, em_salary, em_join_date, em_password)VALUES ('$em_name', '$em_email', '$em_phone', '$em_branch', '$em_designation', '$em_nid ', '$em_salary', '$em_join_date', '$em_password')";
+    $insert = $db->query($command);
+    if ($insert) {
+        return $_SESSION['message'] = "<div class='alert alert-success' role='alert'>Employee Create Successfully</div>";
+    }else{
+        return $_SESSION['message'] = "<div class='alert alert-danger' role='alert'>Employee Create Failed!</div>";
+    }
 }

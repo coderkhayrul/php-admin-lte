@@ -112,4 +112,15 @@ function branch(){
 	$command ="SELECT * FROM tbl_branch";
 	$branch = $db->query($command);
 	return $branch;
-}
+};
+
+function branch_insert($branch_name, $branch_email, $branch_phone, $branch_manager, $branch_location){
+    global $db;
+    $command = "INSERT INTO tbl_branch(branch_name, branch_email, branch_phone, branch_manager, branch_location)VALUES ('$branch_name', '$branch_email', '$branch_phone', '$branch_manager', '$branch_location')";
+    $insert = $db->query($command);
+    if ($insert) {
+        $_SESSION['success_message'] = "Branch Create Successfully";
+    }else{
+        $_SESSION['error_message'] = "Branch Create Failed!";
+    }
+};

@@ -31,7 +31,11 @@
         <?php 
         if ($_SESSION['success_message']) { ?>
             Command: toastr["success"]("<?php echo $_SESSION['success_message']; unset($_SESSION['success_message'])?>");
+        <?php }
+        if ($_SESSION['error_message']) { ?>
+            Command: toastr["error"]("<?php echo $_SESSION['error_message']; unset($_SESSION['error_message'])?>");
         <?php } ?>
+        
     toastr.options = {
     "closeButton": false,
     "debug": false,

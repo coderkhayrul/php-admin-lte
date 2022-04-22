@@ -34,7 +34,6 @@
                 </div>
                 <div class="card-body">
                     <?php
-                        // include "./database/function.php";
                         if (isset($_POST['saveEmployee'])) {
 
                             $em_name = $_POST['em_name'];

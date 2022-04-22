@@ -36,6 +36,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
+                <li class="nav-header">Main Section</li>
                 <li class="nav-item">
                     <a href="dashboard.php" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -67,6 +68,29 @@
                             <a href="#" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Roles</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-dolly-flatbed"></i>
+                        <p>
+                            Branch
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="branch.php" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Branch List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="branch_create.php" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Branch Add</p>
                             </a>
                         </li>
                     </ul>

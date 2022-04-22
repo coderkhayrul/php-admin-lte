@@ -40,6 +40,9 @@ function get_login($em_email, $em_password) {
         return "<div class='alert alert-danger' role='alert'>Login Failed!</div>";
     }
 }
+// -------------------------------------------
+// ----------EMPLOYEE FUNCTION START----------
+// -------------------------------------------
 
 // Get All Employee
 function employee(){
@@ -98,4 +101,15 @@ function emp_destroy($em_id){
         $_SESSION['success_message'] = "Employee Delete Successfully";
         header("Location: employee.php");
     }
+}
+
+// -------------------------------------------
+// ------------EMPLOYEE FUNCTION END----------
+// -------------------------------------------
+// Get All Branch
+function branch(){
+    global $db;
+	$command ="SELECT * FROM tbl_branch";
+	$branch = $db->query($command);
+	return $branch;
 }

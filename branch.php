@@ -50,10 +50,10 @@
                                 </thead>
                                 <tbody>
                                 <?php 
-                                    // Delete Employee
+                                    // Delete Branch
                                     if (isset($_GET["id"])) {
                                         $id=$_GET['id'];
-                                        emp_destroy($id);
+                                        branch_destroy($id);
                                     }
 
 
@@ -85,7 +85,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Are you sure want to delte this User?
+                                                            Are you sure want to delte this Branch?
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

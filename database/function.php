@@ -113,7 +113,7 @@ function branch(){
 	$branch = $db->query($command);
 	return $branch;
 };
-
+// Branch Insert
 function branch_insert($branch_name, $branch_email, $branch_phone, $branch_manager, $branch_location){
     global $db;
     $command = "INSERT INTO tbl_branch(branch_name, branch_email, branch_phone, branch_manager, branch_location)VALUES ('$branch_name', '$branch_email', '$branch_phone', '$branch_manager', '$branch_location')";
@@ -124,3 +124,34 @@ function branch_insert($branch_name, $branch_email, $branch_phone, $branch_manag
         $_SESSION['error_message'] = "Branch Create Failed!";
     }
 };
+
+// Branch Edit
+function branch_edit($branch_id){
+    global $db;
+	$command ="SELECT *FROM tbl_branch WHERE branch_id='$branch_id'";
+	$branch = $db->query($command);
+	return $branch;
+}
+
+// Branch Update
+function branch_update($branch_name, $branch_email, $branch_phone, $branch_manager, $branch_location, $branch_id){
+    global $db;
+    $command = "UPDATE tbl_branch SET branch_name='$branch_name', branch_email='$branch_email', branch_phone='$branch_phone', branch_manager='$branch_manager', branch_location='$branch_location', branch_id='$branch_id'WHERE branch_id='$branch_id'";
+    $update = $db->query($command);
+    if ($update) {
+        $_SESSION['success_message'] = "Branch Update Successfully";
+    }else{
+        $_SESSION['error_message'] = "Branch Update Failed!";
+    }
+}
+
+// Branch Delete
+function branch_destroy($branch_id){
+	global $db;
+	$command="DELETE FROM tbl_branch WHERE branch_id='$branch_id'";
+	$delete=$db->query($command);
+	if ($delete) {
+        $_SESSION['success_message'] = "Branch Delete Successfully";
+        header("Location: branch.php");
+    }
+}

@@ -88,10 +88,13 @@
                                     <label for="em_branch" class="control-label">Branch</label>
                                     <select class="form-control" name="em_branch">
                                         <option value="0" selected>Select Branch</option>
-                                        <option value="1">Dhanmondi</option>
-                                        <option value="2">Mirpur</option>
-                                        <option value="3">FirmGate</option>
-                                        <option value="4">Uttra</option>
+                                        <?php
+                                            $branch = all_branch();
+                                            while ($info = $branch->fetch_assoc()){?>
+                                        <option value="<?php echo $info['branch_id'] ?>" <?php echo $info['branch_id'] == $data['em_branch'] ? 'selected' : '' ?> >
+                                        <?php echo $info['branch_name'] ?></option>
+                                            <?php }
+                                        ?>
                                     </select>
                                 </div>
                             </div>

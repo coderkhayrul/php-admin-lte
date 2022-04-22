@@ -26,16 +26,21 @@ function register($em_name, $em_email, $em_phone, $em_password){
 // Employee Login Function
 function get_login($em_email, $em_password) {
     global $db;
-    $command = "SELECT * FROM tbl_employee WHERE em_email = '$em_email' OR  em_phone = '$em_email' AND em_password = '$em_password' AND em_status = '1'";
+    $command = "SELECT * FROM tbl_employee WHERE em_email = '$em_email' || em_phone = '$em_email'";
     $login_info = $db->query($command);
+
     if ($login_info->num_rows > 0) {
-        while ($data = $login_info->fetch_assoc()) {
+        $data = $login_info->fetch_assoc();
+        if ($data['em_email'] === $em_email OR $data['em_phone'] === $em_email && $data['em_password'] === $em_password) {
             $_SESSION['auth_id'] = $data['em_id'];
             $_SESSION['auth_name'] = $data['em_name'];
             $_SESSION['auth_branch'] = $data['em_branch'];
             $_SESSION['auth_designation'] = $data['em_designation'];
-            header('location: dashboard.php');
+            header('Location: dashboard.php');
+        }else {
+            return "<div class='alert alert-danger' role='alert'>Login Failed!</div>";
         }
+
     }else {
         return "<div class='alert alert-danger' role='alert'>Login Failed!</div>";
     }
@@ -50,6 +55,14 @@ function employee(){
 	$command ="SELECT * FROM tbl_employee";
 	$employee = $db->query($command);
 	return $employee;
+}
+
+// Get Branch For Employee
+function all_branch(){
+    global $db;
+	$command ="SELECT * FROM tbl_branch";
+	$branch = $db->query($command);
+	return $branch;
 }
 
 // Employee Insert 
@@ -106,6 +119,13 @@ function emp_destroy($em_id){
 // -------------------------------------------
 // ------------EMPLOYEE FUNCTION END----------
 // -------------------------------------------
+
+///////////////////////////////////////////////
+
+// -------------------------------------------
+// ------------BRANCH FUNCTION START----------
+// -------------------------------------------
+
 // Get All Branch
 function branch(){
     global $db;
@@ -155,3 +175,67 @@ function branch_destroy($branch_id){
         header("Location: branch.php");
     }
 }
+
+// -------------------------------------------
+// ------------BRANCH FUNCTION END------------
+// -------------------------------------------
+
+//////////////////////////////////////////////
+
+// -------------------------------------------
+// ------------CUSTOMER FUNCTION START--------
+// -------------------------------------------
+
+// Get All Customer
+function customer(){
+    global $db;
+	$command ="SELECT * FROM tbl_customer";
+	$customer = $db->query($command);
+	return $customer;
+};
+// Customer Insert
+function customer_insert($customer_name, $customer_phone, $branch_id, $customer_address){
+    global $db;
+    $command = "INSERT INTO tbl_customer(customer_name, customer_phone, branch_id, customer_address)VALUES ('$customer_name', '$customer_phone', '$branch_id', '$customer_address')";
+    $insert = $db->query($command);
+    if ($insert) {
+        $_SESSION['success_message'] = "Customer Create Successfully";
+    }else{
+        $_SESSION['error_message'] = "Customer Create Failed!";
+    }
+};
+
+// Customer Edit
+function customer_edit($customer_id){
+    global $db;
+	$command ="SELECT *FROM tbl_customer WHERE customer_id='$customer_id'";
+	$customer = $db->query($command);
+	return $customer;
+}
+
+// Customer Update
+function customer_update($customer_name, $customer_phone, $branch_id, $customer_address, $customer_id){
+    global $db;
+    $command = "UPDATE tbl_customer SET customer_name='$customer_name', customer_phone='$customer_phone', branch_id='$branch_id', customer_address='$customer_address'WHERE customer_id='$customer_id'";
+    $update = $db->query($command);
+    if ($update) {
+        $_SESSION['success_message'] = "Customer Update Successfully";
+    }else{
+        $_SESSION['error_message'] = "Customer Update Failed!";
+    }
+}
+
+// Customer Delete
+function customer_destroy($customer_id){
+	global $db;
+	$command="DELETE FROM tbl_customer WHERE customer_id='$customer_id'";
+	$delete=$db->query($command);
+	if ($delete) {
+        $_SESSION['success_message'] = "Customer Delete Successfully";
+        header("Location: customer.php");
+    }
+}
+
+// -------------------------------------------
+// ------------CUSTOMER FUNCTION END------------
+// -------------------------------------------

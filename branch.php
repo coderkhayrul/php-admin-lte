@@ -55,8 +55,6 @@
                                         $id=$_GET['id'];
                                         branch_destroy($id);
                                     }
-
-
                                     $branch = branch();
                                     $sl=1;
                                     if ($branch->num_rows>0) {
@@ -85,7 +83,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Are you sure want to delte this Branch?
+                                                            Are you sure want to Delete this Branch?
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

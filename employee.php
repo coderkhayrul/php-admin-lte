@@ -71,7 +71,13 @@
                                                 <td><?php echo $sl++ ?></td>
                                                 <td><?php echo $data['em_name'] ?></td>
                                                 <td><?php echo $data['em_phone'] ?></td>
-                                                <td><?php echo $data['em_branch'] ?></td>
+                                                <td>
+                                                <?php
+                                                    $branch = all_branch();
+                                                    while ($info = $branch->fetch_assoc()){
+                                                        echo $data['em_branch'] == $info['branch_id'] ? $info['branch_name'] : '';
+                                                    } ?>
+                                                </td>
                                                 <td><?php echo $data['em_designation'] ?></td>
                                                 <td class="text-center">
                                                     <?php 
@@ -100,7 +106,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Are you sure want to delte this User?
+                                                            Are you sure want to Delete this Employee?
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

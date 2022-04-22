@@ -34,6 +34,7 @@
                 </div>
                 <div class="card-body">
                     <?php
+
                         if (isset($_POST['saveEmployee'])) {
 
                             $em_name = $_POST['em_name'];
@@ -79,10 +80,12 @@
                                     <label for="em_branch" class="control-label">Branch</label>
                                     <select class="form-control" name="em_branch">
                                         <option value="0" selected>Select Branch</option>
-                                        <option value="1">Dhanmondi</option>
-                                        <option value="2">Mirpur</option>
-                                        <option value="3">FirmGate</option>
-                                        <option value="4">Uttra</option>
+                                        <?php
+                                            $branch = all_branch();
+                                            while ($data = $branch->fetch_assoc()){?>
+                                        <option value="<?php echo $data['branch_id'] ?>"><?php echo $data['branch_name'] ?></option>
+                                            <?php }
+                                        ?>
                                     </select>
                                 </div>
                             </div>

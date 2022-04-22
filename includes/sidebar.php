@@ -95,6 +95,29 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-street-view"></i>
+                        <p>
+                            Customer
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="customer.php" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Customer List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="customer_create.php" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Customer Add</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-header">Expense</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">

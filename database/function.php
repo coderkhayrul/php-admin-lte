@@ -194,9 +194,9 @@ function customer(){
 	return $customer;
 };
 // Customer Insert
-function customer_insert($customer_name, $customer_phone, $branch_id, $customer_address){
+function customer_insert($customer_branch, $customer_name, $customer_phone, $customer_address){
     global $db;
-    $command = "INSERT INTO tbl_customer(customer_name, customer_phone, branch_id, customer_address)VALUES ('$customer_name', '$customer_phone', '$branch_id', '$customer_address')";
+    $command = "INSERT INTO tbl_customer(customer_branch, customer_name, customer_phone, customer_address)VALUES ('$customer_branch', '$customer_name', '$customer_phone', '$customer_address')";
     $insert = $db->query($command);
     if ($insert) {
         $_SESSION['success_message'] = "Customer Create Successfully";
@@ -214,9 +214,9 @@ function customer_edit($customer_id){
 }
 
 // Customer Update
-function customer_update($customer_name, $customer_phone, $branch_id, $customer_address, $customer_id){
+function customer_update($customer_name, $customer_phone, $customer_branch, $customer_address, $customer_id){
     global $db;
-    $command = "UPDATE tbl_customer SET customer_name='$customer_name', customer_phone='$customer_phone', branch_id='$branch_id', customer_address='$customer_address'WHERE customer_id='$customer_id'";
+    $command = "UPDATE tbl_customer SET customer_name='$customer_name', customer_phone='$customer_phone', customer_branch='$customer_branch', customer_address='$customer_address'WHERE customer_id='$customer_id'";
     $update = $db->query($command);
     if ($update) {
         $_SESSION['success_message'] = "Customer Update Successfully";

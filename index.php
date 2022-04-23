@@ -31,21 +31,21 @@
         <?php 
           include "./database/function.php";
           if (isset($_POST['login'])) {
-            $em_email = $_POST['em_email'];
-            $em_password = $_POST['em_password'];
-            $em_password = md5($em_password);
+            $em_phone =  stripslashes($_POST['em_phone']);
+            $em_password = stripslashes($_POST['em_password']);
+            $password = md5($em_password);
 
-            if (empty($em_email) || empty($em_password)) {
+            if (empty($em_phone) || empty($password)) {
               echo $error = "<div class='alert alert-danger' role='alert'>Please Fill all required fields!</div>";
             }else {
-              $login = get_login($em_email, $em_password);
+              $login = get_login($em_phone, $password);
               echo $login;
             }
           }
         ?>
         <form method="post">
           <div class="input-group mb-3">
-            <input name="em_email" type="text" class="form-control" placeholder="Email Or Phone">
+            <input name="em_phone" type="text" class="form-control" placeholder="Phone Number">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>

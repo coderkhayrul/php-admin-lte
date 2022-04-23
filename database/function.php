@@ -19,19 +19,18 @@ function register($em_name, $em_email, $em_phone, $em_password){
         $_SESSION['message'] = "<div class='alert alert-success' role='alert'>Employee Register Successfully</div>";
         return header("Location: index.php");
     }else{
-        return $_SESSION['message'] = "<div class='alert alert-danger' role='alert'>Employee Register Failed!</div>";
+        return $_SESSION['error_message'] = "<div class='alert alert-danger' role='alert'>Employee Register Failed!</div>";
     }
 }
 
 // Employee Login Function
-function get_login($em_email, $em_password) {
+function get_login($em_phone, $password) {
     global $db;
-    $command = "SELECT * FROM tbl_employee WHERE em_email = '$em_email' || em_phone = '$em_email'";
+    $command = "SELECT * FROM tbl_employee WHERE em_phone = '$em_phone' AND em_status = 1";
     $login_info = $db->query($command);
-
     if ($login_info->num_rows > 0) {
         $data = $login_info->fetch_assoc();
-        if ($data['em_email'] === $em_email OR $data['em_phone'] === $em_email && $data['em_password'] === $em_password) {
+        if ($data['em_phone'] === $em_phone && $data['em_password'] === $password) {
             $_SESSION['auth_id'] = $data['em_id'];
             $_SESSION['auth_name'] = $data['em_name'];
             $_SESSION['auth_branch'] = $data['em_branch'];
@@ -214,9 +213,9 @@ function customer_edit($customer_id){
 }
 
 // Customer Update
-function customer_update($customer_name, $customer_phone, $customer_branch, $customer_address, $customer_id){
+function customer_update($customer_branch, $customer_name, $customer_phone, $customer_address, $customer_id){
     global $db;
-    $command = "UPDATE tbl_customer SET customer_name='$customer_name', customer_phone='$customer_phone', customer_branch='$customer_branch', customer_address='$customer_address'WHERE customer_id='$customer_id'";
+    $command = "UPDATE tbl_customer SET customer_name='$customer_name', customer_phone='$customer_phone', customer_branch='$customer_branch', customer_address='$customer_address' WHERE customer_id='$customer_id'";
     $update = $db->query($command);
     if ($update) {
         $_SESSION['success_message'] = "Customer Update Successfully";
@@ -237,5 +236,5 @@ function customer_destroy($customer_id){
 }
 
 // -------------------------------------------
-// ------------CUSTOMER FUNCTION END------------
+// ------------CUSTOMER FUNCTION END----------
 // -------------------------------------------

@@ -254,7 +254,7 @@ function company(){
 	return $company;
 };
 // Company Insert
-function company_insert($company_branch, $company_name, $company_phone, $company_email, $company_address, $company_manager){
+function company_insert($company_branch, $company_name, $company_email, $company_phone, $company_address, $company_manager){
     global $db;
     $command = "INSERT INTO tbl_company(company_branch, company_name, company_phone, company_email, company_address, company_manager)
     VALUES ('$company_branch', '$company_name', '$company_phone', '$company_email', '$company_address', '$company_manager')";
@@ -275,9 +275,9 @@ function company_edit($company_id){
 }
 
 // Company Update
-function company_update($company_branch, $company_name, $company_phone, $company_email, $company_address, $company_manager, $company_id){
+function company_update($company_branch, $company_name, $company_email, $company_phone, $company_address, $company_manager, $company_id){
     global $db;
-    $command = "UPDATE tbl_company SET company_branch='$company_branch', company_name='$company_name', company_phone='$company_phone', company_email='$company_email', company_address='$company_address', company_manager='$company_manager' WHERE company_id='$company_id'";
+    $command = "UPDATE tbl_company SET company_branch='$company_branch', company_name='$company_name', company_email='$company_email', company_phone='$company_phone',  company_address='$company_address', company_manager='$company_manager' WHERE company_id='$company_id'";
     $update = $db->query($command);
     if ($update) {
         $_SESSION['success_message'] = "Company Update Successfully";

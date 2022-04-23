@@ -336,22 +336,22 @@ function product_show($product_id){
 }
 
 // Product Edit
-function product_edit($company_id){
+function product_edit($product_id){
     global $db;
-	$command ="SELECT *FROM tbl_company WHERE company_id='$company_id'";
-	$company = $db->query($command);
-	return $company;
+	$command ="SELECT *FROM tbl_product WHERE product_id='$product_id'";
+	$product = $db->query($command);
+	return $product;
 }
 
 // Product Update
-function product_update($company_branch, $company_name, $company_email, $company_phone, $company_address, $company_manager, $company_id){
+function product_update($product_name, $product_barcode, $product_size, $product_type, $product_branch, $product_cost, $product_sell, $product_quantity, $product_description, $product_id){
     global $db;
-    $command = "UPDATE tbl_company SET company_branch='$company_branch', company_name='$company_name', company_email='$company_email', company_phone='$company_phone',  company_address='$company_address', company_manager='$company_manager' WHERE company_id='$company_id'";
+    $command = "UPDATE tbl_product SET product_name='$product_name', product_barcode='$product_barcode', product_size='$product_size', product_type='$product_type',  product_branch='$product_branch', product_cost='$product_cost', product_sell='$product_sell', product_quantity='$product_quantity', product_description='$product_description' WHERE product_id='$product_id'";
     $update = $db->query($command);
     if ($update) {
-        $_SESSION['success_message'] = "Company Update Successfully";
+        $_SESSION['success_message'] = "Product Update Successfully";
     }else{
-        $_SESSION['error_message'] = "Company Update Failed!";
+        $_SESSION['error_message'] = "Product Update Failed!";
     }
 }
 

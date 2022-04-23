@@ -356,13 +356,13 @@ function product_update($company_branch, $company_name, $company_email, $company
 }
 
 // Product Delete
-function product_destroy($company_id){
+function product_destroy($product_id){
 	global $db;
-	$command="DELETE FROM tbl_company WHERE company_id='$company_id'";
+	$command="DELETE FROM tbl_product WHERE product_id='$product_id'";
 	$delete=$db->query($command);
 	if ($delete) {
-        $_SESSION['success_message'] = "Company Delete Successfully";
-        header("Location: company.php");
+        $_SESSION['success_message'] = "Product Delete Successfully";
+        header("Location: product.php");
     }
 }
 

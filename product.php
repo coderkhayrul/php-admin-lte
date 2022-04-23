@@ -57,10 +57,10 @@
                                 </thead>
                                 <tbody>
                                 <?php 
-                                    // Delete Employee
+                                    // Delete Product
                                     if (isset($_GET["id"])) {
                                         $id=$_GET['id'];
-                                        emp_destroy($id);
+                                        product_destroy($id);
                                     }
 
 
@@ -109,7 +109,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Are you sure want to Delete this Employee?
+                                                            Are you sure want to Delete this Product?
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

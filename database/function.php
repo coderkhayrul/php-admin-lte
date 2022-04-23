@@ -315,15 +315,15 @@ function product(){
 };
 
 // Product Insert
-function product_insert($company_branch, $company_name, $company_email, $company_phone, $company_address, $company_manager){
+function product_insert($product_name, $product_barcode, $product_size, $product_type, $product_branch, $product_cost, $product_sell, $product_quantity, $product_description){
     global $db;
-    $command = "INSERT INTO tbl_company(company_branch, company_name, company_phone, company_email, company_address, company_manager)
-    VALUES ('$company_branch', '$company_name', '$company_phone', '$company_email', '$company_address', '$company_manager')";
+    $command = "INSERT INTO tbl_product(product_name, product_barcode, product_size, product_type, product_branch, product_cost, product_sell, product_quantity, product_description)
+    VALUES ('$product_name', '$product_barcode', '$product_size', '$product_type', '$product_branch', '$product_cost', '$product_sell', '$product_quantity', '$product_description')";
     $insert = $db->query($command);
     if ($insert) {
-        $_SESSION['success_message'] = "Company Create Successfully";
+        $_SESSION['success_message'] = "Product Create Successfully";
     }else{
-        $_SESSION['error_message'] = "Company Create Failed!";
+        $_SESSION['error_message'] = "Product Create Failed!";
     }
 };
 

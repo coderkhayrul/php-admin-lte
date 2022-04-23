@@ -141,6 +141,29 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fab fa-product-hunt"></i>
+                        <p>
+                            Product
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="product.php" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Product List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="product_create.php" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Product Add</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-header">Expense</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">

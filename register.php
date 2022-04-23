@@ -1,3 +1,10 @@
+<?php 
+    session_start();  
+    if (isset($_SESSION['auth_name'])) {
+    include "./database/function.php";
+        header('location: dashboard.php');
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 

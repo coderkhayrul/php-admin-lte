@@ -118,6 +118,29 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-building"></i>
+                        <p>
+                            Company
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="company.php" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Company List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="company_create.php" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Company Add</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-header">Expense</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">

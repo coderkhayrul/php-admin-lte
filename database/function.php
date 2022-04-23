@@ -238,3 +238,65 @@ function customer_destroy($customer_id){
 // -------------------------------------------
 // ------------CUSTOMER FUNCTION END----------
 // -------------------------------------------
+
+
+//////////////////////////////////////////////
+
+// -------------------------------------------
+// ------------COMPANY FUNCTION START---------
+// -------------------------------------------
+
+// Get All Company
+function company(){
+    global $db;
+	$command ="SELECT * FROM tbl_company";
+	$company = $db->query($command);
+	return $company;
+};
+// Company Insert
+function company_insert($company_branch, $company_name, $company_phone, $company_email, $company_address, $company_manager){
+    global $db;
+    $command = "INSERT INTO tbl_company(company_branch, company_name, company_phone, company_email, company_address, company_manager)
+    VALUES ('$company_branch', '$company_name', '$company_phone', '$company_email', '$company_address', '$company_manager')";
+    $insert = $db->query($command);
+    if ($insert) {
+        $_SESSION['success_message'] = "Company Create Successfully";
+    }else{
+        $_SESSION['error_message'] = "Company Create Failed!";
+    }
+};
+
+// Company Edit
+function company_edit($company_id){
+    global $db;
+	$command ="SELECT *FROM tbl_company WHERE company_id='$company_id'";
+	$company = $db->query($command);
+	return $company;
+}
+
+// Company Update
+function company_update($company_branch, $company_name, $company_phone, $company_email, $company_address, $company_manager, $company_id){
+    global $db;
+    $command = "UPDATE tbl_company SET company_branch='$company_branch', company_name='$company_name', company_phone='$company_phone', company_email='$company_email', company_address='$company_address', company_manager='$company_manager' WHERE company_id='$company_id'";
+    $update = $db->query($command);
+    if ($update) {
+        $_SESSION['success_message'] = "Company Update Successfully";
+    }else{
+        $_SESSION['error_message'] = "Company Update Failed!";
+    }
+}
+
+// Company Delete
+function company_destroy($company_id){
+	global $db;
+	$command="DELETE FROM tbl_company WHERE company_id='$company_id'";
+	$delete=$db->query($command);
+	if ($delete) {
+        $_SESSION['success_message'] = "Company Delete Successfully";
+        header("Location: company.php");
+    }
+}
+
+// -------------------------------------------
+// ------------COMPANY FUNCTION END ----------
+// -------------------------------------------

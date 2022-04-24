@@ -56,6 +56,8 @@
                     ?>
                     <form method="post" >
                         <div class="row">
+                            <!-- Product Branch -->
+                            <input type="hidden" class="form-control" name="product_branch" placeholder="Enter Branch" value="<?php echo $_SESSION['auth_branch'] ?>">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="product_name" class="control-label">Name</label>
@@ -90,20 +92,6 @@
                                         <option value="gadget">Gadget</option>
                                         <option value="components">Components</option>
                                         <option value="accessories">Accessories</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="product_branch" class="control-label">Branch</label>
-                                    <select class="form-control" name="product_branch">
-                                        <option value="0" selected>Select Branch</option>
-                                        <?php
-                                            $branch = all_branch();
-                                            while ($data = $branch->fetch_assoc()){?>
-                                        <option value="<?php echo $data['branch_id'] ?>"><?php echo $data['branch_name'] ?></option>
-                                            <?php }
-                                        ?>
                                     </select>
                                 </div>
                             </div>

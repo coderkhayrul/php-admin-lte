@@ -249,7 +249,8 @@ function customer_destroy($customer_id){
 // Get All Company
 function company(){
     global $db;
-	$command ="SELECT * FROM tbl_company";
+    $auth_branch = $_SESSION['auth_branch'];
+	$command ="SELECT * FROM tbl_company WHERE company_branch='$auth_branch'";
 	$company = $db->query($command);
 	return $company;
 };
@@ -309,7 +310,8 @@ function company_destroy($company_id){
 // Get All Product
 function product(){
     global $db;
-	$command ="SELECT * FROM tbl_product";
+    $auth_branch = $_SESSION['auth_branch'];
+	$command ="SELECT * FROM tbl_product WHERE product_branch='$auth_branch'";
 	$product = $db->query($command);
 	return $product;
 };
@@ -376,6 +378,7 @@ function product_destroy($product_id){
 // ------------PURCHASE FUNCTION START -------
 // -------------------------------------------
 
+
 // Get All Company
 function get_company_for_purchase(){
     global $db;
@@ -384,3 +387,43 @@ function get_company_for_purchase(){
     $pu_company = $db->query($command);
     return $pu_company;
 };
+
+function get_branch_for_purchase(){
+    global $db;
+    $auth_branch = $_SESSION['auth_branch'];
+	$command ="SELECT * FROM tbl_branch WHERE branch_id = '$auth_branch'";
+	$pu_branch = $db->query($command);
+	return $pu_branch;
+};
+function search_product_for_purchase($pd_product_barcode){
+    global $db;
+    $command ="SELECT * FROM tbl_product WHERE product_barcode='$pd_product_barcode'";
+    $search_product = $db->query($command);
+    return $search_product;
+
+};
+
+function insertPurchase($pd_branch, $pd_company, $pd_date, $pd_invoice, $pd_product_barcode, $pd_product_price, $pd_quantity, $pd_total_price){
+    global $db;
+    $command ="INSERT INTO tbl_purchase_details(pd_branch, pd_company, pd_date, pd_invoice, pd_product_barcode, pd_product_price, pd_quantity, pd_total_price)
+    VALUES('$pd_branch', '$pd_company', '$pd_date', '$pd_invoice', '$pd_product_barcode', '$pd_product_price', '$pd_quantity', '$pd_total_price')";
+    $insert = $db->query($command);
+    if ($insert) {
+        $_SESSION['success_message'] = "Product Purchase Successfully";
+    }else{
+        $_SESSION['error_message'] = "Product Purchase Failed!";
+    }
+};
+
+function get_purchase_product(){
+    global $db;
+    $branch_id = $_SESSION['auth_branch'];
+    $command ="SELECT * FROM tbl_purchase_details WHERE pd_branch='$branch_id'";
+    $get_purchase = $db->query($command);
+    return $get_purchase;
+};
+
+
+// -------------------------------------------
+// ------------PURCHASE FUNCTION END ---------
+// -------------------------------------------

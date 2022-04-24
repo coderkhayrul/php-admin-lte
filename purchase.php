@@ -29,478 +29,127 @@
         <div class="container-fluid">
 
             <div class="card">
+                <?php
+                if (isset($_POST['findProduct'])) {
+                    $pd_product_barcode = $_POST['pd_product_barcode'];
+                    $pd_branch = $_POST['pd_branch'];
+                    $company_name = $_POST['company_name'];
+                    $pd_date = $_POST['pd_date'];
+                    $pd_invoice = $_POST['pd_invoice'];
+                    $search_product = search_product_for_purchase($pd_product_barcode, $pd_branch);
+                }
+                if (isset($_POST['insertPurchase'])) {
+                    $pd_branch = $_POST['pd_branch'];
+                    $pd_company = $_POST['pd_company'];
+                    $pd_date = $_POST['pd_date'];
+                    $pd_invoice = $_POST['pd_invoice'];
+                    $pd_product_barcode = $_POST['pd_product_barcode'];
+                    $pd_product_price = $_POST['pd_product_price'];
+                    $pd_quantity = $_POST['pd_quantity'];
+                    $pd_total_price = $_POST['pd_total_price'];
+                    
+                    if (empty($pd_branch) && empty($pd_company) && empty($pd_date) && empty($pd_invoice) && empty($pd_product_barcode) && empty($pd_product_price) && empty($pd_quantity) && empty($pd_total_price)) {
+                        $_SESSION['error_message'] = "Please Fill all required fields!";
+                    }else{
+                        insertPurchase($pd_branch, $pd_company, $pd_date, $pd_invoice, $pd_product_barcode, $pd_product_price, $pd_quantity, $pd_total_price);
+                    }
+                }
+                ?>
+
                 <div class="card-header">
-                    <!-- 1 ROW START -->
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" value="<?php echo $_SESSION['auth_branch']; ?>"
-                                disabled>
-                        </div>
-                        <div class="col-md-3">
-                            <select class="form-control" name="pd_branch" id="">
-                                <option value="">Select Company</option>
-                                <?php
+                    <form method="POST">
+                        <!-- 1 ROW START -->
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-3">
+                                <select name="pd_branch" class="form-control">
+                                    <?php
+                                $branchs = get_branch_for_purchase();
+                                $auth_branch = $_SESSION['auth_branch'];
+                                foreach ($branchs as $branch) {?>
+                                    <option value="<?php echo $branch['branch_id'] ?>"
+                                        <?php echo $info['branch_id'] == $_SESSION['auth_branch'] ? 'selected' : '' ?>>
+                                        <?php echo $branch['branch_name'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" name="pd_company" id="">
+                                    <option value="0">Select Company</option>
+                                    <?php
                                 $pu_company = get_company_for_purchase();
                                 foreach ($pu_company as $company) { ?>
-                                <option value=""><?php echo $company['company_name']; ?></option>
+                                    <option value="<?php echo $company['company_id']; ?>"><?php echo $company['company_name']; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <input name="pd_date" type="date" class="form-control" value="<?php echo $pd_date ?>">
+                            </div>
+                            <div class="col-md-3">
+                                <input name="pd_invoice" type="number" class="form-control" placeholder="Invoice" value="<?php echo $pd_invoice ?>">
+                            </div>
+                        </div>
+                        <!-- 2 ROW START -->
+                        <div class="row mt-4">
+                            <div class="col-md-3">
+                                <input name="pd_product_barcode" type="number" class="form-control"
+                                    placeholder="Enter Barcode" value="<?php echo $pd_product_barcode ?>">
+                            </div>
+                            <div class="col-md-1">
+                                <button name="findProduct" class="btn btn-success" name="find">Find</button>
+                            </div>
+                            <div class="col-md-2">
+                                <?php
+                                foreach ($search_product as $product){?>
+                                    <input id="product_price" name="pd_product_price" type="number" class="form-control"
+                                        placeholder="Product Price" value="<?php echo $product['product_cost'] ?>">
                                 <?php } ?>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <input name="pd_date" type="date" class="form-control">
-                        </div>
-                        <div class="col-md-3">
-                            <input name="pd_invoice" type="number" class="form-control" placeholder="Invoice">
-                        </div>
-                    </div>
-                    <!-- 2 ROW START -->
-                    <div class="row mt-4">
-                        <div class="col-md-3">
-                            <input name="pd_product_barcode" type="number" class="form-control"
-                                placeholder="Enter Barcode">
-                        </div>
-                        <div class="col-md-1">
-                            <button class="btn btn-success" name="find">Find</button>
-                        </div>
-                        <div class="col-md-2">
-                            <input name="pd_product_price" type="number" class="form-control"
-                                placeholder="Product Price">
-                        </div>
+                            </div>
 
-                        <div class="col-md-2 d-flex">
-                            <input name="pd_invoice" type="number" class="form-control" placeholder="Qty" value="1"
-                                min="1">
-                            <!-- Quantity Button -->
-                            <input name="addition" type="button" class="btn btn-sm btn-primary ml-2" value="+">
-                            <input name="subtraction" type="button" class="btn btn-sm btn-danger ml-2" value="-">
+                            <div class="col-md-2 d-flex">
+                                <input id="pd_quantity" name="pd_quantity" type="number" class="form-control" placeholder="Qty" value="0">
+                                <!-- Quantity Button -->
+                                <input name="addition" type="button" class="btn btn-sm btn-primary ml-2" value="+" onclick="increaseValue()">
+                                <input name="subtraction" type="button" class="btn btn-sm btn-primary ml-2" value="-" onclick="decreaseValue()">
+                            </div>
+                            <div class="col-md-2">
+                                <input id="pd_total_price" name="pd_total_price" type="number" class="form-control"
+                                    placeholder="Total Price">
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <button name="insertPurchase" class="btn btn-success">Purchase Add</button>
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <input name="pd_total_price" type="number" class="form-control" placeholder="Total Price">
-                        </div>
-                        <div class="col-md-2 text-center">
-                            <button class="btn btn-success">Purchase Add</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
+
                 <div class="card-body">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Rendering engine</th>
-                                <th>Browser</th>
-                                <th>Platform(s)</th>
-                                <th>Engine version</th>
-                                <th>CSS grade</th>
+                                <th>Invoice</th>
+                                <th>Product Name</th>
+                                <th>Date</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php
+                            $purchases = get_purchase_product();
+                            foreach ($purchases as $purchase){ ?>
                             <tr>
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 4.0
+                                <td><?php echo $purchase['pd_invoice'] ?></td>
+                                <td><?php echo $purchase['pd_product_barcode'] ?></td>
+                                <td><?php echo $purchase['pd_date'] ?></td>
+                                <td><?php echo $purchase['pd_product_price'] ?> ৳</td>
+                                <td><?php echo $purchase['pd_quantity'] ?></td>
+                                <td class="text-center">
+                                    <a href="#" class="btn btn-danger btn-sm">Delete</a>
                                 </td>
-                                <td>Win 95+</td>
-                                <td> 4</td>
-                                <td>X</td>
                             </tr>
-                            <tr>
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.0
-                                </td>
-                                <td>Win 95+</td>
-                                <td>5</td>
-                                <td>C</td>
-                            </tr>
-                            <tr>
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 5.5
-                                </td>
-                                <td>Win 95+</td>
-                                <td>5.5</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Trident</td>
-                                <td>Internet
-                                    Explorer 6
-                                </td>
-                                <td>Win 98+</td>
-                                <td>6</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Trident</td>
-                                <td>Internet Explorer 7</td>
-                                <td>Win XP SP2+</td>
-                                <td>7</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Trident</td>
-                                <td>AOL browser (AOL desktop)</td>
-                                <td>Win XP</td>
-                                <td>6</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Firefox 1.0</td>
-                                <td>Win 98+ / OSX.2+</td>
-                                <td>1.7</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Firefox 1.5</td>
-                                <td>Win 98+ / OSX.2+</td>
-                                <td>1.8</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Firefox 2.0</td>
-                                <td>Win 98+ / OSX.2+</td>
-                                <td>1.8</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Firefox 3.0</td>
-                                <td>Win 2k+ / OSX.3+</td>
-                                <td>1.9</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Camino 1.0</td>
-                                <td>OSX.2+</td>
-                                <td>1.8</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Camino 1.5</td>
-                                <td>OSX.3+</td>
-                                <td>1.8</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Netscape 7.2</td>
-                                <td>Win 95+ / Mac OS 8.6-9.2</td>
-                                <td>1.7</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Netscape Browser 8</td>
-                                <td>Win 98SE+</td>
-                                <td>1.7</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Netscape Navigator 9</td>
-                                <td>Win 98+ / OSX.2+</td>
-                                <td>1.8</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Mozilla 1.0</td>
-                                <td>Win 95+ / OSX.1+</td>
-                                <td>1</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Mozilla 1.1</td>
-                                <td>Win 95+ / OSX.1+</td>
-                                <td>1.1</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Mozilla 1.2</td>
-                                <td>Win 95+ / OSX.1+</td>
-                                <td>1.2</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Mozilla 1.3</td>
-                                <td>Win 95+ / OSX.1+</td>
-                                <td>1.3</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Mozilla 1.4</td>
-                                <td>Win 95+ / OSX.1+</td>
-                                <td>1.4</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Mozilla 1.5</td>
-                                <td>Win 95+ / OSX.1+</td>
-                                <td>1.5</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Mozilla 1.6</td>
-                                <td>Win 95+ / OSX.1+</td>
-                                <td>1.6</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Mozilla 1.7</td>
-                                <td>Win 98+ / OSX.1+</td>
-                                <td>1.7</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Mozilla 1.8</td>
-                                <td>Win 98+ / OSX.1+</td>
-                                <td>1.8</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Seamonkey 1.1</td>
-                                <td>Win 98+ / OSX.2+</td>
-                                <td>1.8</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Gecko</td>
-                                <td>Epiphany 2.20</td>
-                                <td>Gnome</td>
-                                <td>1.8</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Webkit</td>
-                                <td>Safari 1.2</td>
-                                <td>OSX.3</td>
-                                <td>125.5</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Webkit</td>
-                                <td>Safari 1.3</td>
-                                <td>OSX.3</td>
-                                <td>312.8</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Webkit</td>
-                                <td>Safari 2.0</td>
-                                <td>OSX.4+</td>
-                                <td>419.3</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Webkit</td>
-                                <td>Safari 3.0</td>
-                                <td>OSX.4+</td>
-                                <td>522.1</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Webkit</td>
-                                <td>OmniWeb 5.5</td>
-                                <td>OSX.4+</td>
-                                <td>420</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Webkit</td>
-                                <td>iPod Touch / iPhone</td>
-                                <td>iPod</td>
-                                <td>420.1</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Webkit</td>
-                                <td>S60</td>
-                                <td>S60</td>
-                                <td>413</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Presto</td>
-                                <td>Opera 7.0</td>
-                                <td>Win 95+ / OSX.1+</td>
-                                <td>-</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Presto</td>
-                                <td>Opera 7.5</td>
-                                <td>Win 95+ / OSX.2+</td>
-                                <td>-</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Presto</td>
-                                <td>Opera 8.0</td>
-                                <td>Win 95+ / OSX.2+</td>
-                                <td>-</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Presto</td>
-                                <td>Opera 8.5</td>
-                                <td>Win 95+ / OSX.2+</td>
-                                <td>-</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Presto</td>
-                                <td>Opera 9.0</td>
-                                <td>Win 95+ / OSX.3+</td>
-                                <td>-</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Presto</td>
-                                <td>Opera 9.2</td>
-                                <td>Win 88+ / OSX.3+</td>
-                                <td>-</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Presto</td>
-                                <td>Opera 9.5</td>
-                                <td>Win 88+ / OSX.3+</td>
-                                <td>-</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Presto</td>
-                                <td>Opera for Wii</td>
-                                <td>Wii</td>
-                                <td>-</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Presto</td>
-                                <td>Nokia N800</td>
-                                <td>N800</td>
-                                <td>-</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Presto</td>
-                                <td>Nintendo DS browser</td>
-                                <td>Nintendo DS</td>
-                                <td>8.5</td>
-                                <td>C/A<sup>1</sup></td>
-                            </tr>
-                            <tr>
-                                <td>KHTML</td>
-                                <td>Konqureror 3.1</td>
-                                <td>KDE 3.1</td>
-                                <td>3.1</td>
-                                <td>C</td>
-                            </tr>
-                            <tr>
-                                <td>KHTML</td>
-                                <td>Konqureror 3.3</td>
-                                <td>KDE 3.3</td>
-                                <td>3.3</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>KHTML</td>
-                                <td>Konqureror 3.5</td>
-                                <td>KDE 3.5</td>
-                                <td>3.5</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Tasman</td>
-                                <td>Internet Explorer 4.5</td>
-                                <td>Mac OS 8-9</td>
-                                <td>-</td>
-                                <td>X</td>
-                            </tr>
-                            <tr>
-                                <td>Tasman</td>
-                                <td>Internet Explorer 5.1</td>
-                                <td>Mac OS 7.6-9</td>
-                                <td>1</td>
-                                <td>C</td>
-                            </tr>
-                            <tr>
-                                <td>Tasman</td>
-                                <td>Internet Explorer 5.2</td>
-                                <td>Mac OS 8-X</td>
-                                <td>1</td>
-                                <td>C</td>
-                            </tr>
-                            <tr>
-                                <td>Misc</td>
-                                <td>NetFront 3.1</td>
-                                <td>Embedded devices</td>
-                                <td>-</td>
-                                <td>C</td>
-                            </tr>
-                            <tr>
-                                <td>Misc</td>
-                                <td>NetFront 3.4</td>
-                                <td>Embedded devices</td>
-                                <td>-</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Misc</td>
-                                <td>Dillo 0.8</td>
-                                <td>Embedded devices</td>
-                                <td>-</td>
-                                <td>X</td>
-                            </tr>
-                            <tr>
-                                <td>Misc</td>
-                                <td>Links</td>
-                                <td>Text only</td>
-                                <td>-</td>
-                                <td>X</td>
-                            </tr>
-                            <tr>
-                                <td>Misc</td>
-                                <td>Lynx</td>
-                                <td>Text only</td>
-                                <td>-</td>
-                                <td>X</td>
-                            </tr>
-                            <tr>
-                                <td>Misc</td>
-                                <td>IE Mobile</td>
-                                <td>Windows Mobile 6</td>
-                                <td>-</td>
-                                <td>C</td>
-                            </tr>
-                            <tr>
-                                <td>Misc</td>
-                                <td>PSP browser</td>
-                                <td>PSP</td>
-                                <td>-</td>
-                                <td>C</td>
-                            </tr>
-                            <tr>
-                                <td>Other browsers</td>
-                                <td>All others</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>U</td>
-                            </tr>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -512,5 +161,28 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<script>
+    function increaseValue() {
+        var quantity = parseInt(document.getElementById('pd_quantity').value); 
+        var product_price = parseInt(document.getElementById('product_price').value);
+        var totalQuantity = quantity+1;
+        document.getElementById('pd_quantity').value = totalQuantity;
+        var totalPrice =(product_price * totalQuantity); 
+        document.getElementById('pd_total_price').value = totalPrice;
+    }
+    function decreaseValue() {
+        var quantity = parseInt(document.getElementById('pd_quantity').value); 
+        var product_price = parseInt(document.getElementById('product_price').value);
+        if (quantity == 0) {
+            document.getElementById('pd_quantity').value = 0;
+            document.getElementById('pd_total_price').value = 0;
+        }else{
+            var totalQuantity = quantity-1;
+            document.getElementById('pd_quantity').value = totalQuantity;
+            var totalPrice =(product_price * totalQuantity); 
+            document.getElementById('pd_total_price').value = totalPrice;
+        }
+    }
 
+</script>
 <?php include './includes/footer.php'; ?>

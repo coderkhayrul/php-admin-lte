@@ -52,20 +52,8 @@
                     ?>
                     <form method="post">
                         <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="company_branch" class="control-label">Branch Name</label>
-                                    <select class="form-control" name="company_branch">
-                                        <option value="0">Select Branch</option>
-                                        <?php
-                                            $branch = all_branch();
-                                            while ($data = $branch->fetch_assoc()){?>
-                                        <option value="<?php echo $data['branch_id'] ?>"><?php echo $data['branch_name'] ?></option>
-                                            <?php }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
+                            <!-- Company Branch -->
+                            <input type="hidden" class="form-control" name="company_branch" placeholder="Enter Branch" value="<?php echo $_SESSION['auth_branch'] ?>">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="company_name" class="control-label">Name</label>

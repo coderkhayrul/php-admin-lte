@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 23, 2022 at 10:03 PM
+-- Generation Time: Apr 24, 2022 at 10:19 PM
 -- Server version: 8.0.28-0ubuntu0.20.04.3
 -- PHP Version: 7.4.3
 
@@ -43,9 +43,9 @@ CREATE TABLE `tbl_branch` (
 --
 
 INSERT INTO `tbl_branch` (`branch_id`, `branch_name`, `branch_location`, `branch_manager`, `branch_phone`, `branch_email`, `branch_status`) VALUES
-(4, 'Dhanmondi', 'Shukrabad', 'Asik Bhuiyan', '01458756854', 'dhanmondi@gmail.com', 1),
-(5, 'Mirpur', 'Kazipara', 'Salim Ahmad', '01458756854', 'mirpur@gmail.com', 1),
-(6, 'Firmgate', 'Firmgate', 'Robin Ahmad', '01458756854', 'firmgate@gmail.com', 1);
+(8, 'Dhanmondi', 'Dhanmondi 32 Road Bridge, Dhanmondi Bridge, Dhaka', 'Aslam Ahamde', '01823039800', 'info@stock.com', 1),
+(9, 'Mirpur', 'Mirpur 10 Bus Stand, মিরপুর ১০ নং গোলচত্বর, Dhaka', 'Salim Ahmad', '01711125323', 'info@stock.com', 1),
+(10, 'Kawran Bazar', 'Kawran Bazar Bus Stop, Kazi Nazrul Islam Avenue, Dhaka', 'Amit Choudhori', '01713061459', 'info@stock.com', 1);
 
 -- --------------------------------------------------------
 
@@ -68,7 +68,10 @@ CREATE TABLE `tbl_company` (
 --
 
 INSERT INTO `tbl_company` (`company_id`, `company_branch`, `company_name`, `company_phone`, `company_email`, `company_address`, `company_manager`) VALUES
-(14, 5, 'Knox Meyers Inc', '0164654643', 'kypahux@mailinator.com', 'Wong Moreno', 'Soto and Miles Plc');
+(19, 9, 'Start Tech', '01355485684', 'starttech@gmail.com', 'Abu Rayhan', 'multiplan, Elephan Road'),
+(20, 9, 'Ryans Computers', '01854512475', 'ryanscomputers@gmail.com', 'Robin Ahmad', 'multiplan, Elephan Road'),
+(21, 8, 'Computer City Technologies Ltd', '01938-858800', 'computercity@gmail.com', 'Asikur Raham', '75 Laboratory Rd, Dhaka 1205'),
+(22, 10, 'Touch It', '01928-028742', 'touchit@gmail.com', 'Asik Bhuiyan', 'multiplan, Elephan Road');
 
 -- --------------------------------------------------------
 
@@ -90,9 +93,9 @@ CREATE TABLE `tbl_customer` (
 --
 
 INSERT INTO `tbl_customer` (`customer_id`, `customer_branch`, `customer_name`, `customer_address`, `customer_phone`, `customer_status`) VALUES
-(3, 4, 'Talon Orr', 'Id unde beatae volu', '+1 (236) 234-6616', 1),
-(4, 5, 'Jada Howard', 'Maiores incidunt el', '+1 (744) 851-2559', 1),
-(6, 4, 'Dexter Guerrero', 'Quae vitae qui liber', '+1 (805) 365-8386', 1);
+(3, 8, 'Talon Orr', 'Id unde beatae volu', '+1 (236) 234-6616', 1),
+(4, 9, 'Jada Howard', 'Maiores incidunt el', '+1 (744) 851-2559', 1),
+(6, 10, 'Dexter Guerrero', 'Quae vitae qui liber', '+1 (805) 365-8386', 1);
 
 -- --------------------------------------------------------
 
@@ -120,9 +123,9 @@ CREATE TABLE `tbl_employee` (
 --
 
 INSERT INTO `tbl_employee` (`em_id`, `em_branch`, `em_designation`, `em_name`, `em_address`, `em_nid`, `em_phone`, `em_email`, `em_join_date`, `em_salary`, `em_password`, `em_status`) VALUES
-(48, '5', 'manager', 'Admin', NULL, NULL, '01835061968', 'admin@mail.com', NULL, NULL, '5f4dcc3b5aa765d61d8327deb882cf99', 1),
-(52, '6', 'Eum mollit proident', 'Alisa Whitfield', 'Et culpa temporibus', 9, '+1 (821) 806-6234', 'wojiwuzid@mailinator.com', '2016-11-18', 76, '5f4dcc3b5aa765d61d8327deb882cf99', 1),
-(53, '4', 'user', 'Camille Gibson', 'Accusamus velit dolo', 30, '01303132067', 'user@mail.com', '2000-01-18', 88, '5f4dcc3b5aa765d61d8327deb882cf99', 1);
+(48, '9', 'manager', 'Mirpur Admin', NULL, NULL, '01835061968', 'admin@mail.com', NULL, NULL, '5f4dcc3b5aa765d61d8327deb882cf99', 1),
+(52, '8', 'Eum mollit proident', 'Alisa Whitfield', 'Et culpa temporibus', 9, '+1 (821) 806-6234', 'wojiwuzid@mailinator.com', '2016-11-18', 76, '5f4dcc3b5aa765d61d8327deb882cf99', 1),
+(53, '10', 'user', 'Camille Gibson', 'Accusamus velit dolo', 30, '01303132067', 'user@mail.com', '2000-01-18', 88, '5f4dcc3b5aa765d61d8327deb882cf99', 1);
 
 -- --------------------------------------------------------
 
@@ -149,11 +152,36 @@ CREATE TABLE `tbl_product` (
 --
 
 INSERT INTO `tbl_product` (`product_id`, `product_branch`, `product_barcode`, `product_name`, `product_description`, `product_type`, `product_size`, `product_cost`, `product_sell`, `product_quantity`, `product_status`) VALUES
-(1, 5, '21547854', 'Headphone', 'Fantech Headphone', 'gaming', 'larage', 500, 700, 20, 1),
-(2, 4, '58', 'Sophia Norman', 'Fugit consectetur ', 'gadget', 'small', 35, 32, 100, 1),
-(4, 6, '6', 'Lillith Simpson', 'Culpa quia accusamus', 'security', 'medium', 36, 81, 314, 1),
-(5, 4, '8', 'Justin Williams', 'In nisi tempora aut ', 'components', 'large', 18, 1, 39, 1),
-(6, 4, '28', 'Farrah Sweet', 'Amet et qui nostrum', 'gadget', 'small', 71, 37, 711, 1);
+(11, 9, '202201', 'Logitech K120', '\r\nThe latest price of Logitech K120 Usb Keyboard With Bangla Black in Bangladesh is 600৳. You can buy the Logitech K120 Usb Keyboard With Bangla Black at best price from our website or visit any of our showrooms.', 'accessories', 'no-size', 500, 600, 100, 1),
+(12, 9, '202202', 'Gamdias ZEUS E2 RGB', 'Multi-color lighting Multi-color breathing lighting.6 smart key6 keys for strategic assignment.3200 DPI 3200 DPI for pixel perfect accuracy.MOUSE MAT Dimension(LxWxH) 240 x 180 x 3 mm.3 million click (Lifecycle)Heavy-duty 3 million click lifecycle.Double-layer fabrics Double-layer fabrics provide uniformly vertical and horizontal movement resistance', 'accessories', 'no-size', 950, 1100, 50, 1),
+(13, 9, '202203', 'Logitech C270 HD Webcam', 'HD video calling (1280 x 720 pixels)\r\nUp to 3.0 megapixels (software enhanced)\r\nBuilt-in mic with Logitech RightSound™ technology\r\nWorks with Skype, Windows Live, AOL® &Yahoo! Messenger\r\nUSB Connector', 'accessories', 'no-size', 2500, 2800, 70, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_purchase_details`
+--
+
+CREATE TABLE `tbl_purchase_details` (
+  `pd_id` int NOT NULL,
+  `pd_date` varchar(100) NOT NULL,
+  `pd_invoice` varchar(50) NOT NULL,
+  `pd_branch` int NOT NULL,
+  `pd_company` int NOT NULL,
+  `pd_product_barcode` int NOT NULL,
+  `pd_product_price` int NOT NULL,
+  `pd_quantity` int NOT NULL,
+  `pd_total_price` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `tbl_purchase_details`
+--
+
+INSERT INTO `tbl_purchase_details` (`pd_id`, `pd_date`, `pd_invoice`, `pd_branch`, `pd_company`, `pd_product_barcode`, `pd_product_price`, `pd_quantity`, `pd_total_price`) VALUES
+(2, '2022-04-25', '253552', 9, 19, 202202, 950, 5, 4750),
+(3, '2022-04-25', '253553', 9, 19, 202203, 2500, 3, 7500),
+(4, '2022-04-30', '253554', 9, 20, 202203, 2500, 5, 12500);
 
 --
 -- Indexes for dumped tables
@@ -190,6 +218,12 @@ ALTER TABLE `tbl_product`
   ADD PRIMARY KEY (`product_id`);
 
 --
+-- Indexes for table `tbl_purchase_details`
+--
+ALTER TABLE `tbl_purchase_details`
+  ADD PRIMARY KEY (`pd_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -197,13 +231,13 @@ ALTER TABLE `tbl_product`
 -- AUTO_INCREMENT for table `tbl_branch`
 --
 ALTER TABLE `tbl_branch`
-  MODIFY `branch_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `branch_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tbl_company`
 --
 ALTER TABLE `tbl_company`
-  MODIFY `company_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `company_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `tbl_customer`
@@ -221,7 +255,13 @@ ALTER TABLE `tbl_employee`
 -- AUTO_INCREMENT for table `tbl_product`
 --
 ALTER TABLE `tbl_product`
-  MODIFY `product_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `product_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `tbl_purchase_details`
+--
+ALTER TABLE `tbl_purchase_details`
+  MODIFY `pd_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

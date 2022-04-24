@@ -56,6 +56,8 @@
                                         $id=$_GET['id'];
                                         company_destroy($id);
                                     }
+
+                                    
                                     $company = company();
                                     $sl=1;
                                     if ($company->num_rows>0) {

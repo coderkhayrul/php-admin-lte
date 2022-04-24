@@ -12,6 +12,12 @@
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Home</a>
                 </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="purchase.php" class="nav-link btn btn-primary btn-sm mx-2">Product Purchase</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block mx-2">
+                    <a href="sell.php" class="nav-link btn btn-success btn-sm">Product Sell</a>
+                </li>
             </ul>
 
             <!-- Right navbar links -->

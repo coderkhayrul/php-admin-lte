@@ -188,7 +188,6 @@
                         </li>
                     </ul>
                 </li>
-
                 <li class="nav-header">General</li>
                 <li class="nav-item">
                     <a href="logout.php" class="nav-link">

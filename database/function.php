@@ -369,3 +369,18 @@ function product_destroy($product_id){
 // -------------------------------------------
 // ------------PRODUCT FUNCTION END ----------
 // -------------------------------------------
+
+//////////////////////////////////////////////
+
+// -------------------------------------------
+// ------------PURCHASE FUNCTION START -------
+// -------------------------------------------
+
+// Get All Company
+function get_company_for_purchase(){
+    global $db;
+    $auth_branch = $_SESSION['auth_branch'];
+    $command ="SELECT * FROM tbl_company WHERE company_branch='$auth_branch'";
+    $pu_company = $db->query($command);
+    return $pu_company;
+};

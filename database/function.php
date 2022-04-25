@@ -423,7 +423,6 @@ function get_purchase_product(){
     return $get_purchase;
 };
 
-
 // -------------------------------------------
 // ------------PURCHASE FUNCTION END ---------
 // -------------------------------------------

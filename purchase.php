@@ -132,6 +132,7 @@
                                 <th>Date</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
+                                <th>Total Price</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -145,11 +146,12 @@
                                 <td><?php echo $purchase['pd_date'] ?></td>
                                 <td><?php echo $purchase['pd_product_price'] ?> ৳</td>
                                 <td><?php echo $purchase['pd_quantity'] ?></td>
+                                <td>50,000 ৳</td>
                                 <td class="text-center">
-                                    <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                                    <a href="#" class="btn btn-success btn-sm">Summery</a>
                                 </td>
                             </tr>
-                            <?php } ?>
+                            <?php }?>
                         </tbody>
                     </table>
                 </div>

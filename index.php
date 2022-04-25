@@ -1,8 +1,8 @@
 <?php 
-      session_start();  
+    session_start();  
     if (isset($_SESSION['auth_name'])) {
       include "./database/function.php";
-        header('location: dashboard.php');
+      header('location: dashboard.php');
     }
 ?>
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 24, 2022 at 10:19 PM
+-- Generation Time: Apr 25, 2022 at 09:49 PM
 -- Server version: 8.0.28-0ubuntu0.20.04.3
 -- PHP Version: 7.4.3
 
@@ -179,9 +179,36 @@ CREATE TABLE `tbl_purchase_details` (
 --
 
 INSERT INTO `tbl_purchase_details` (`pd_id`, `pd_date`, `pd_invoice`, `pd_branch`, `pd_company`, `pd_product_barcode`, `pd_product_price`, `pd_quantity`, `pd_total_price`) VALUES
-(2, '2022-04-25', '253552', 9, 19, 202202, 950, 5, 4750),
-(3, '2022-04-25', '253553', 9, 19, 202203, 2500, 3, 7500),
-(4, '2022-04-30', '253554', 9, 20, 202203, 2500, 5, 12500);
+(22, '2022-04-26', '11111', 9, 19, 202201, 500, 5, 2500),
+(23, '2022-04-26', '11111', 9, 19, 202201, 500, 2, 1000),
+(24, '2022-04-26', '11111', 9, 19, 202202, 950, 2, 1900),
+(25, '2022-04-26', '11111', 9, 19, 202202, 950, 1, 950),
+(26, '2022-04-26', '11111', 9, 19, 202202, 950, 1, 950),
+(27, '2022-04-26', '11111', 9, 19, 202202, 950, 3, 2850),
+(28, '2022-04-26', '11111', 9, 19, 202202, 950, 3, 2850),
+(29, '2022-04-26', '22222', 9, 20, 202202, 950, 2, 1900),
+(30, '2022-04-26', '22222', 9, 20, 202203, 2500, 2, 5000),
+(31, '2022-04-27', '55555', 9, 20, 202203, 2500, 2, 5000),
+(32, '2022-04-27', '55555', 9, 20, 202202, 950, 3, 2850);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_purchase_summary`
+--
+
+CREATE TABLE `tbl_purchase_summary` (
+  `ps_id` int NOT NULL,
+  `ps_purchase_date` varchar(100) NOT NULL,
+  `ps_branch` int NOT NULL,
+  `ps_total_quantity` int NOT NULL,
+  `ps_total_price` int NOT NULL,
+  `ps_discount` int NOT NULL,
+  `ps_net_amount` int NOT NULL,
+  `ps_payment` int NOT NULL,
+  `ps_due_amount` int NOT NULL,
+  `ps_employee` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Indexes for dumped tables
@@ -224,6 +251,12 @@ ALTER TABLE `tbl_purchase_details`
   ADD PRIMARY KEY (`pd_id`);
 
 --
+-- Indexes for table `tbl_purchase_summary`
+--
+ALTER TABLE `tbl_purchase_summary`
+  ADD PRIMARY KEY (`ps_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -261,7 +294,13 @@ ALTER TABLE `tbl_product`
 -- AUTO_INCREMENT for table `tbl_purchase_details`
 --
 ALTER TABLE `tbl_purchase_details`
-  MODIFY `pd_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `pd_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT for table `tbl_purchase_summary`
+--
+ALTER TABLE `tbl_purchase_summary`
+  MODIFY `ps_id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

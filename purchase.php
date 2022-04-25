@@ -155,56 +155,57 @@
                             </tr>
                             <?php }?>
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th rowspan="1" colspan="3">
-                                    
-                                </th>
-                                <th rowspan="1" colspan="1">
-                                    <label for="" class="control-label">Total Price:</label>
-                                    <?php
-                                        $total_prices = purchase_total_price($pd_company, $pd_date, $pd_invoice);
-                                        foreach ($total_prices as $total_price){ ?>
-                                            <input id="total_price" type="number" class="form-control text-center" value="<?php echo $total_price['product_price']; ?>" readonly>
-                                    <?php } ?>
-                                </th>
-                                <th rowspan="1" colspan="1" class="text-center">
-                                    <label for="" class="control-label">Total Quantity:</label>
-                                    <?php
-                                        $total_quantitys = purchase_total_quantity($pd_company, $pd_date, $pd_invoice);
-                                        foreach ($total_quantitys as $total_quantity){ ?>
-                                            <input id="total_quantity" type="number" class="form-control text-center" value="<?php echo $total_quantity['product_quantity']; ?>" readonly>
-                                    <?php } ?>
-                                </th>
-                                <th rowspan="1" colspan="1">
-                                    <label for="" class="control-label">Discount Amount:</label>
-                                    <input id="discount_amount" type="number" class="form-control" onkeyup="CalcDiscount();" min="0">
-                                </th>
-                            </tr>
-                            <tr>
-                                <th rowspan="1" colspan="2">
-                                    <label for="" class="control-label">Purchase By:</label>
-                                    <input type="text" class="form-control" value="<?php echo $_SESSION['auth_name']; ?>" readonly>
-                                </th>
-                                <th rowspan="1" colspan="1">
-                                    <label for="" class="control-label">Purchase From:</label>
-                                    <input type="text" class="form-control" value="<?php echo $_SESSION['auth_name']; ?>" readonly>
-                                </th>
-                                <th rowspan="1" colspan="1">
-                                    <label for="" class="control-label">Net Amount:</label>
-                                    <input id="net_amount" type="number" class="form-control" readonly>
-                                </th>
-                                <th rowspan="1" colspan="1">
-                                    <label for="" class="control-label">Due Amount:</label>
-                                    <input id="due_amount" type="number" class="form-control" readonly>
-                                </th>
-                                <th rowspan="1" colspan="1">
-                                    <label for="" class="control-label">Payment Amount:</label>
-                                    <input id="payment_amount" type="number" class="form-control" onkeyup="payDiscount();">
-                                </th>
-                                
-                            </tr>
-                        </tfoot>
+                        <form method="POST">
+                            <tfoot>
+                                <tr>
+                                    <th rowspan="1" colspan="3">
+                                        
+                                    </th>
+                                    <th rowspan="1" colspan="1">
+                                        <label for="" class="control-label">Total Price:</label>
+                                        <?php
+                                            $total_prices = purchase_total_price($pd_company, $pd_date, $pd_invoice);
+                                            foreach ($total_prices as $total_price){ ?>
+                                                <input id="total_price" type="number" class="form-control text-center" value="<?php echo $total_price['product_price']; ?>" readonly>
+                                        <?php } ?>
+                                    </th>
+                                    <th rowspan="1" colspan="1" class="text-center">
+                                        <label for="" class="control-label">Total Quantity:</label>
+                                        <?php
+                                            $total_quantitys = purchase_total_quantity($pd_company, $pd_date, $pd_invoice);
+                                            foreach ($total_quantitys as $total_quantity){ ?>
+                                                <input id="total_quantity" type="number" class="form-control text-center" value="<?php echo $total_quantity['product_quantity']; ?>" readonly>
+                                        <?php } ?>
+                                    </th>
+                                    <th rowspan="1" colspan="1">
+                                        <label for="" class="control-label">Discount Amount:</label>
+                                        <input id="discount_amount" type="number" class="form-control" onkeyup="CalcDiscount();" min="0">
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th rowspan="1" colspan="2">
+                                        <label for="" class="control-label">Purchase By:</label>
+                                        <input type="text" class="form-control" value="<?php echo $_SESSION['auth_name']; ?>" readonly>
+                                    </th>
+                                    <th rowspan="1" colspan="1">
+                                        <label for="" class="control-label">Purchase From:</label>
+                                        <input type="text" class="form-control" value="<?php echo $_SESSION['auth_name']; ?>" readonly>
+                                    </th>
+                                    <th rowspan="1" colspan="1">
+                                        <label for="" class="control-label">Net Amount:</label>
+                                        <input id="net_amount" type="number" class="form-control" readonly>
+                                    </th>
+                                    <th rowspan="1" colspan="1">
+                                        <label for="" class="control-label">Due Amount:</label>
+                                        <input id="due_amount" type="number" class="form-control" readonly>
+                                    </th>
+                                    <th rowspan="1" colspan="1">
+                                        <label for="" class="control-label">Payment Amount:</label>
+                                        <input id="payment_amount" type="number" class="form-control" onkeyup="payDiscount();" min="0">
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </form>
                     </table>
                 </div>
             </div>
@@ -262,8 +263,13 @@ function payDiscount(){
     var payment_amount = parseInt(document.getElementById('payment_amount').value);
     var net_amount = parseInt(document.getElementById('net_amount').value);
     var due_amount = parseInt(document.getElementById('due_amount').value);
-    
-    
+
+    if (net_amount <= payment_amount) {
+        $("#due_amount").val(0);
+    }else{
+        var due_blances =  net_amount - payment_amount;
+        $("#due_amount").val(due_blances);
+    }
 }
 
 </script>

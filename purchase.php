@@ -33,7 +33,7 @@
                 if (isset($_POST['findProduct'])) {
                     $pd_product_barcode = $_POST['pd_product_barcode'];
                     $pd_branch = $_POST['pd_branch'];
-                    $pd_company = $_POST['company_name'];
+                    $pd_company = $_POST['pd_company'];
                     $pd_date = $_POST['pd_date'];
                     $pd_invoice = $_POST['pd_invoice'];
                     $search_product = search_product_for_purchase($pd_product_barcode, $pd_branch);
@@ -78,9 +78,7 @@
                                     <?php
                                 $pu_company = get_company_for_purchase();
                                 foreach ($pu_company as $company) { ?>
-                                    <option value="<?php echo $company['company_id']; ?>"
-                                        <?php echo $company['company_id'] == $pd_company ? 'selected' : '' ?>>
-                                        <?php echo $company['company_name']; ?></option>
+                                    <option value="<?php echo $company['company_id']; ?>" <?php echo $company['company_id'] == $pd_company ? 'selected' : '' ?> > <?php echo $company['company_name']; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -143,7 +141,7 @@
                         </thead>
                         <tbody>
                             <?php
-                            $purchases = get_purchase_product($company_name, $pd_date, $pd_invoice);
+                            $purchases = get_purchase_product($pd_company, $pd_date, $pd_invoice);
                             foreach ($purchases as $purchase){ ?>
                             <tr class="text-center">
                                 <td><?php echo $purchase['pd_invoice'] ?></td>
@@ -164,15 +162,23 @@
                                 </th>
                                 <th rowspan="1" colspan="1">
                                     <label for="" class="control-label">Total Price:</label>
-                                    <input id="total_price" type="number" class="form-control" readonly>
+                                    <?php
+                                        $total_prices = purchase_total_price($pd_company, $pd_date, $pd_invoice);
+                                        foreach ($total_prices as $total_price){ ?>
+                                            <input id="total_price" type="number" class="form-control text-center" value="<?php echo $total_price['product_price']; ?>" readonly>
+                                    <?php } ?>
                                 </th>
-                                <th rowspan="1" colspan="1">
+                                <th rowspan="1" colspan="1" class="text-center">
                                     <label for="" class="control-label">Total Quantity:</label>
-                                    <input id="total_quantity" type="number" class="form-control" readonly>
+                                    <?php
+                                        $total_quantitys = purchase_total_quantity($pd_company, $pd_date, $pd_invoice);
+                                        foreach ($total_quantitys as $total_quantity){ ?>
+                                            <input id="total_quantity" type="number" class="form-control text-center" value="<?php echo $total_quantity['product_quantity']; ?>" readonly>
+                                    <?php } ?>
                                 </th>
                                 <th rowspan="1" colspan="1">
                                     <label for="" class="control-label">Discount Amount:</label>
-                                    <input id="discount_amount" type="number" class="form-control">
+                                    <input id="discount_amount" type="number" class="form-control" onkeyup="CalcDiscount();" min="0">
                                 </th>
                             </tr>
                             <tr>
@@ -189,13 +195,14 @@
                                     <input id="net_amount" type="number" class="form-control" readonly>
                                 </th>
                                 <th rowspan="1" colspan="1">
-                                    <label for="" class="control-label">Payment Amount:</label>
-                                    <input id="payment_amount" type="number" class="form-control">
-                                </th>
-                                <th rowspan="1" colspan="1">
                                     <label for="" class="control-label">Due Amount:</label>
                                     <input id="due_amount" type="number" class="form-control" readonly>
                                 </th>
+                                <th rowspan="1" colspan="1">
+                                    <label for="" class="control-label">Payment Amount:</label>
+                                    <input id="payment_amount" type="number" class="form-control" onkeyup="payDiscount();">
+                                </th>
+                                
                             </tr>
                         </tfoot>
                     </table>
@@ -231,5 +238,33 @@
             document.getElementById('pd_total_price').value = totalPrice;
         }
     }
+</script>
+<script>
+
+function CalcDiscount(){
+    var total_price = parseInt(document.getElementById('total_price').value);
+    var discount_amount = parseInt(document.getElementById('discount_amount').value);
+
+    if (discount_amount <= 0) {
+        $("#net_amount").val(total_price);
+    }else{
+        var net_amount =  total_price - discount_amount;
+        if (discount_amount >= total_price) {
+            document.getElementById('net_amount').value = 0;
+
+        }else{
+            $("#net_amount").val(net_amount);
+        }
+    }
+}
+
+function payDiscount(){
+    var payment_amount = parseInt(document.getElementById('payment_amount').value);
+    var net_amount = parseInt(document.getElementById('net_amount').value);
+    var due_amount = parseInt(document.getElementById('due_amount').value);
+    
+    
+}
+
 </script>
 <?php include './includes/footer.php'; ?>

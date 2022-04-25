@@ -415,13 +415,26 @@ function insertPurchase($pd_branch, $pd_company, $pd_date, $pd_invoice, $pd_prod
     }
 };
 
-function get_purchase_product($company_name, $pd_date, $pd_invoice){
+function get_purchase_product($pd_company, $pd_date, $pd_invoice){
     global $db;
-    $branch_id = $_SESSION['auth_branch'];
-    $command ="SELECT * FROM tbl_purchase_details WHERE pd_company ='$company_name' AND pd_date = '$pd_date' AND pd_invoice = '$pd_invoice'";
+    $command ="SELECT * FROM tbl_purchase_details WHERE pd_company ='$pd_company' AND pd_date = '$pd_date' AND pd_invoice = '$pd_invoice'";
     $get_purchase = $db->query($command);
     return $get_purchase;
 };
+
+function purchase_total_price($pd_company, $pd_date, $pd_invoice){
+    global $db;
+    $command ="SELECT SUM(pd_total_price) as product_price FROM tbl_purchase_details WHERE pd_company ='$pd_company' AND pd_date = '$pd_date' AND pd_invoice = '$pd_invoice'";
+    $get_purchase = $db->query($command);
+    return $get_purchase;
+}
+
+function purchase_total_quantity($pd_company, $pd_date, $pd_invoice){
+    global $db;
+    $command ="SELECT SUM(pd_quantity) as product_quantity FROM tbl_purchase_details WHERE pd_company ='$pd_company' AND pd_date = '$pd_date' AND pd_invoice = '$pd_invoice'";
+    $get_purchase = $db->query($command);
+    return $get_purchase;
+}
 
 // -------------------------------------------
 // ------------PURCHASE FUNCTION END ---------

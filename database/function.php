@@ -395,9 +395,9 @@ function get_branch_for_purchase(){
 	$pu_branch = $db->query($command);
 	return $pu_branch;
 };
-function search_product_for_purchase($pd_product_barcode){
+function search_product_for_purchase($pd_product_barcode, $pd_branch){
     global $db;
-    $command ="SELECT * FROM tbl_product WHERE product_barcode='$pd_product_barcode'";
+    $command ="SELECT * FROM tbl_product WHERE product_barcode='$pd_product_barcode' AND product_branch='$pd_branch'";
     $search_product = $db->query($command);
     return $search_product;
 
@@ -415,10 +415,10 @@ function insertPurchase($pd_branch, $pd_company, $pd_date, $pd_invoice, $pd_prod
     }
 };
 
-function get_purchase_product(){
+function get_purchase_product($company_name, $pd_date, $pd_invoice){
     global $db;
     $branch_id = $_SESSION['auth_branch'];
-    $command ="SELECT * FROM tbl_purchase_details WHERE pd_branch='$branch_id'";
+    $command ="SELECT * FROM tbl_purchase_details WHERE pd_company ='$company_name' AND pd_date = '$pd_date' AND pd_invoice = '$pd_invoice'";
     $get_purchase = $db->query($command);
     return $get_purchase;
 };

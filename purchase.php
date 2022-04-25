@@ -76,8 +76,8 @@
                                 <select class="form-control" name="pd_company" id="">
                                     <option value="0">Select Company</option>
                                     <?php
-                                $pu_company = get_company_for_purchase();
-                                foreach ($pu_company as $company) { ?>
+                                    $pu_company = get_company_for_purchase();
+                                    foreach ($pu_company as $company) { ?>
                                     <option value="<?php echo $company['company_id']; ?>" <?php echo $company['company_id'] == $pd_company ? 'selected' : '' ?> > <?php echo $company['company_name']; ?></option>
                                     <?php } ?>
                                 </select>
@@ -189,7 +189,13 @@
                                     </th>
                                     <th rowspan="1" colspan="1">
                                         <label for="" class="control-label">Purchase From:</label>
-                                        <input type="text" class="form-control" value="<?php echo $_SESSION['auth_name']; ?>" readonly>
+                                        <select name="purchases_form" class="form-control">
+                                        <?php
+                                            $pu_company = get_company_for_purchase();
+                                            foreach ($pu_company as $company) { ?>
+                                            <option disabled value="<?php echo $company['company_id']; ?>" <?php echo $company['company_id'] == $pd_company ? 'selected' : '' ?> > <?php echo $company['company_name']; ?></option>
+                                        <?php } ?>
+                                        </select>
                                     </th>
                                     <th rowspan="1" colspan="1">
                                         <label for="" class="control-label">Net Amount:</label>
@@ -207,6 +213,11 @@
                             </tfoot>
                         </form>
                     </table>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button class="btn btn-success p-3 text-uppercase btn-lg"><i class="fas fa-save"></i> Submit Summary</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 

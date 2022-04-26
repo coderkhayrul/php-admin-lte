@@ -27,7 +27,7 @@
 
     // Product Search Function
     if (isset($_POST['searchProduct'])) {
-        $sale_branch = $_POST['sale_branch'];
+        $sale_branch = $_SESSION['auth_branch'];
         $sale_customer = $_POST['sale_customer'];
         $sale_date = $_POST['sale_date'];
         $sale_barcode = $_POST['sale_barcode'];
@@ -45,16 +45,17 @@
         $sale_customer = $_POST['sale_customer'];
         $sale_date = $_POST['sale_date'];
         $sale_barcode = $_POST['sale_barcode'];
+        $sale_invoice = $_POST['sale_invoice'];
         // ------------------------------------
         $sale_product_name = $_POST['sale_product'];
         $sale_price = $_POST['sale_price'];
         $sale_quantity = $_POST['sale_quantity'];
         $sale_total_price = $_POST['sale_total_price'];
 
-        if (empty($sale_branch) || empty($sale_customer) || empty($sale_date) || empty($sale_barcode) || empty($sale_product_name) || empty($sale_price) || empty($sale_quantity) || empty($sale_total_price)) {
+        if (empty($sale_branch) || empty($sale_customer) || empty($sale_date) || empty($sale_barcode) || empty($sale_product_name) || empty($sale_price) || empty($sale_quantity) || empty($sale_total_price) || empty($sale_invoice)) {
             $_SESSION['error_message'] = "Please Fill all required fields!";
         }else{
-            
+            // single_product_add_on_sale($sale_branch, $sale_customer, $sale_date, $sale_barcode, );
         }
 
     }
@@ -65,14 +66,6 @@
         <div class="container-fluid">
             <form method="POST">
                 <div class="row pb-2">
-                    <div class="col-md-3">
-                        <label for="sale_branch" class="control-label">Branch Name</label>
-                        <select name="sale_branch" id="" class="form-control">
-                            <?php $sale_branch = get_branch_for_sale(); ?>
-                            <option value="<?php echo $sale_branch['branch_id']; ?>">
-                                <?php echo $sale_branch['branch_name']; ?></option>
-                        </select>
-                    </div>
                     <div class="col-md-3">
                         <label for="" class="control-label">Customer Name</label>
                         <select name="sale_customer" id="" class="form-control">
@@ -89,6 +82,11 @@
                     <div class="col-md-2">
                         <label for="sale_date" class="control-label">Sale Date</label>
                         <input name="sale_date" type="date" class="form-control" value="<?php echo $sale_date; ?>">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="sale_invoice" class="control-label">Sale Invocie</label>
+                        <input class="form-control" type="number" name="sale_invoice" min="1" value="<?php echo $sale_invoice; ?>" placeholder="Enter Invocie">
+                        </select>
                     </div>
                     <div class="col-md-2">
                         <label for="sale_barcode" class="control-label">Product Barcode</label>

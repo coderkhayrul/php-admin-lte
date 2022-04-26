@@ -501,6 +501,22 @@ function get_customer_for_sale() {
     return $sale_customers;
 }
 
+function get_single_product_for_seles($sale_barcode){
+    global $db;
+    $command ="SELECT * FROM tbl_product WHERE product_barcode = '$sale_barcode'";
+    $products = $db->query($command);
+    if (!empty($products)) {
+        foreach($products as $product){
+            
+            if ($product) {
+                $product;
+                return $product;
+            }
+        }
+        $_SESSION['error_message'] = "Product Not Found!";
+    }
+}
+
 // -------------------------------------------
 // ------------SALES FUNCTION END ---------
 // -------------------------------------------

@@ -436,6 +436,24 @@ function purchase_total_quantity($pd_company, $pd_date, $pd_invoice){
     return $get_purchase;
 }
 
+function purchase_summery_insert($ps_branch, $ps_company, $ps_purchase_date, $ps_invoice, $ps_total_price, $ps_total_quantity, $ps_discount, $ps_employee, $ps_net_amount, $ps_payment_amount, $ps_due_amount){
+    global $db;
+    $command ="INSERT INTO tbl_purchase_summary(ps_branch, ps_company, ps_purchase_date, ps_invoice, ps_total_price, ps_total_quantity, ps_discount, ps_net_amount, ps_payment, ps_due_amount, ps_employee)
+    VALUES('$ps_branch', '$ps_company', '$ps_purchase_date', '$ps_invoice', '$ps_total_price', '$ps_total_quantity', '$ps_discount', '$ps_net_amount', '$ps_payment_amount', '$ps_due_amount', '$ps_employee')";
+    $insert = $db->query($command);
+    if ($insert) {
+        $_SESSION['success_message'] = "Purchase Summer Order Successfully";
+    }else{
+        $_SESSION['error_message'] = "Purchase Summer Order Failed!";
+    }
+};
+
+function get_all_product_for_purchases($pd_branch){
+    global $db;
+    $command ="SELECT * FROM tbl_product WHERE  product_branch ='$pd_branch'";
+    $get_product = $db->query($command);
+    return $get_product;
+}
 // -------------------------------------------
 // ------------PURCHASE FUNCTION END ---------
 // -------------------------------------------

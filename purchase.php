@@ -30,6 +30,29 @@
 
             <div class="card">
                 <?php
+                if (isset($_POST['purchaseSummary'])) {
+                    
+                    $ps_branch = $_POST['pd_branch'];
+                    $ps_company = $_POST['pd_company'];
+                    $ps_purchase_date = $_POST['pd_date'];
+                    $ps_invoice = $_POST['pd_invoice'];
+                    $ps_total_price = $_POST['ps_total_price'];
+                    $ps_total_quantity = $_POST['ps_total_quantity'];
+                    $ps_discount = $_POST['ps_discount'];
+                    $ps_employee = $_POST['ps_employee'];
+                    $ps_net_amount = $_POST['ps_net_amount'];
+                    $ps_payment_amount = $_POST['ps_payment_amount'];
+                    $ps_due_amount = $_POST['ps_due_amount'];
+
+                    if (empty($ps_branch) || empty($ps_company) || empty($ps_purchase_date) || empty($ps_invoice) || empty($ps_total_price) || empty($ps_total_quantity) || empty($ps_discount) || empty($ps_employee) || empty($ps_net_amount) || empty($ps_payment_amount) || empty($ps_due_amount)) {
+                        $_SESSION['error_message'] = "Please Fill all required fields!";
+                    }else {
+                        purchase_summery_insert($ps_branch, $ps_company, $ps_purchase_date, $ps_invoice, $ps_total_price, $ps_total_quantity, $ps_discount, $ps_employee, $ps_net_amount, $ps_payment_amount, $ps_due_amount);
+                    }
+                }
+                ?>
+
+                <?php
                 if (isset($_POST['findProduct'])) {
                     $pd_product_barcode = $_POST['pd_product_barcode'];
                     $pd_branch = $_POST['pd_branch'];
@@ -38,6 +61,7 @@
                     $pd_invoice = $_POST['pd_invoice'];
                     $search_product = search_product_for_purchase($pd_product_barcode, $pd_branch);
                 }
+
                 if (isset($_POST['insertPurchase'])) {
                     $pd_branch = $_POST['pd_branch'];
                     $pd_company = $_POST['pd_company'];
@@ -55,9 +79,8 @@
                     }
                 }
                 ?>
-
-                <div class="card-header">
-                    <form method="POST">
+                <form method="POST">
+                    <div class="card-header">
                         <!-- 1 ROW START -->
                         <div class="row d-flex justify-content-center">
                             <div class="col-md-3">
@@ -78,7 +101,9 @@
                                     <?php
                                     $pu_company = get_company_for_purchase();
                                     foreach ($pu_company as $company) { ?>
-                                    <option value="<?php echo $company['company_id']; ?>" <?php echo $company['company_id'] == $pd_company ? 'selected' : '' ?> > <?php echo $company['company_name']; ?></option>
+                                    <option value="<?php echo $company['company_id']; ?>"
+                                        <?php echo $company['company_id'] == $pd_company ? 'selected' : '' ?>>
+                                        <?php echo $company['company_name']; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -97,7 +122,7 @@
                                     placeholder="Enter Barcode" value="<?php echo $pd_product_barcode ?>">
                             </div>
                             <div class="col-md-1">
-                                <button name="findProduct" class="btn btn-success" name="find">Find</button>
+                                <button name="findProduct" class="btn btn-success">Find</button>
                             </div>
                             <div class="col-md-2">
                                 <?php
@@ -124,49 +149,74 @@
                                 <button name="insertPurchase" class="btn btn-success">Purchase Add</button>
                             </div>
                         </div>
-                    </form>
-                </div>
+                        <!-- </form> -->
+                    </div>
 
-                <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead>
-                            <tr class="text-center">
-                                <th>Invoice</th>
-                                <th>Product Name</th>
-                                <th>Date</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>Invoice</th>
+                                    <th>Product Name</th>
+                                    <th>Date</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
                             $purchases = get_purchase_product($pd_company, $pd_date, $pd_invoice);
                             foreach ($purchases as $purchase){ ?>
-                            <tr class="text-center">
-                                <td><?php echo $purchase['pd_invoice'] ?></td>
-                                <td><?php echo $purchase['pd_product_barcode'] ?></td>
-                                <td><?php echo $purchase['pd_date'] ?></td>
-                                <td><?php echo $purchase['pd_product_price'] ?> ৳</td>
-                                <td><?php echo $purchase['pd_quantity'] ?></td>
-                                <td class="text-center">
-                                    <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-backspace"></i></a>
-                                </td>
-                            </tr>
-                            <?php }?>
-                        </tbody>
-                        <form method="POST">
+                                <tr class="text-center">
+                                    <td><?php echo $purchase['pd_invoice'] ?></td>
+                                    <td>
+                                        <?php
+                                            $all_product = get_all_product_for_purchases($pd_branch);
+                                            foreach ($all_product as $product){
+                                                echo $purchase['pd_product_barcode'] == $product['product_barcode'] ? $product['product_name'] : '';
+                                            }
+                                        ?>
+                                    </td>
+                                    <td><?php echo $purchase['pd_date'] ?></td>
+                                    <td><?php echo $purchase['pd_product_price'] ?> ৳</td>
+                                    <td><?php echo $purchase['pd_quantity'] ?></td>
+                                    <td class="text-center">
+                                        <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-backspace"></i></a>
+                                    </td>
+                                </tr>
+                                <?php }?>
+                            </tbody>
                             <tfoot>
                                 <tr>
-                                    <th rowspan="1" colspan="3">
-                                        
+                                    <th rowspan="1" colspan="2">
+                                        <label for="" class="control-label">Purchase By:</label>
+                                        <input type="text" class="form-control"
+                                            value="<?php echo $_SESSION['auth_name']; ?>" readonly>
+
+                                        <input name="ps_employee" type="hidden" class="form-control"
+                                        value="<?php echo $_SESSION['auth_id']; ?>" readonly>
+                                    </th>
+                                    <th rowspan="1" colspan="1">
+                                        <label for="" class="control-label">Purchase From:</label>
+                                        <select name="purchases_form" class="form-control">
+                                            <?php
+                                            $pu_company = get_company_for_purchase();
+                                            foreach ($pu_company as $company) { ?>
+                                            <option disabled value="<?php echo $company['company_id']; ?>"
+                                                <?php echo $company['company_id'] == $pd_company ? 'selected' : '' ?>>
+                                                <?php echo $company['company_name']; ?></option>
+                                            <?php } ?>
+                                        </select>
                                     </th>
                                     <th rowspan="1" colspan="1">
                                         <label for="" class="control-label">Total Price:</label>
                                         <?php
                                             $total_prices = purchase_total_price($pd_company, $pd_date, $pd_invoice);
                                             foreach ($total_prices as $total_price){ ?>
-                                                <input id="total_price" type="number" class="form-control text-center" value="<?php echo $total_price['product_price']; ?>" readonly>
+                                        <input name="ps_total_price" id="total_price" type="number"
+                                            class="form-control text-center"
+                                            value="<?php echo $total_price['product_price']; ?>" readonly>
                                         <?php } ?>
                                     </th>
                                     <th rowspan="1" colspan="1" class="text-center">
@@ -174,51 +224,50 @@
                                         <?php
                                             $total_quantitys = purchase_total_quantity($pd_company, $pd_date, $pd_invoice);
                                             foreach ($total_quantitys as $total_quantity){ ?>
-                                                <input id="total_quantity" type="number" class="form-control text-center" value="<?php echo $total_quantity['product_quantity']; ?>" readonly>
+                                        <input name="ps_total_quantity" id="total_quantity" type="number"
+                                            class="form-control text-center"
+                                            value="<?php echo $total_quantity['product_quantity']; ?>" readonly>
                                         <?php } ?>
                                     </th>
                                     <th rowspan="1" colspan="1">
                                         <label for="" class="control-label">Discount Amount:</label>
-                                        <input id="discount_amount" type="number" class="form-control" onkeyup="CalcDiscount();" min="0">
+                                        <input name="ps_discount" id="discount_amount" type="number"
+                                            class="form-control" onkeyup="CalcDiscount();" min="0">
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th rowspan="1" colspan="2">
-                                        <label for="" class="control-label">Purchase By:</label>
-                                        <input type="text" class="form-control" value="<?php echo $_SESSION['auth_name']; ?>" readonly>
-                                    </th>
-                                    <th rowspan="1" colspan="1">
-                                        <label for="" class="control-label">Purchase From:</label>
-                                        <select name="purchases_form" class="form-control">
-                                        <?php
-                                            $pu_company = get_company_for_purchase();
-                                            foreach ($pu_company as $company) { ?>
-                                            <option disabled value="<?php echo $company['company_id']; ?>" <?php echo $company['company_id'] == $pd_company ? 'selected' : '' ?> > <?php echo $company['company_name']; ?></option>
-                                        <?php } ?>
-                                        </select>
+
+                                    <th rowspan="1" colspan="3">
+
                                     </th>
                                     <th rowspan="1" colspan="1">
                                         <label for="" class="control-label">Net Amount:</label>
-                                        <input id="net_amount" type="number" class="form-control" readonly>
+                                        <input name="ps_net_amount" id="net_amount" type="number" class="form-control"
+                                            readonly>
                                     </th>
                                     <th rowspan="1" colspan="1">
                                         <label for="" class="control-label">Due Amount:</label>
-                                        <input id="due_amount" type="number" class="form-control" readonly>
+                                        <input name="ps_due_amount" id="due_amount" type="number" class="form-control"
+                                            readonly>
                                     </th>
                                     <th rowspan="1" colspan="1">
                                         <label for="" class="control-label">Payment Amount:</label>
-                                        <input id="payment_amount" type="number" class="form-control" onkeyup="payDiscount();" min="0">
+                                        <input name="ps_payment_amount" id="payment_amount" type="number" class="form-control"
+                                            onkeyup="payDiscount();" min="0">
                                     </th>
                                 </tr>
                             </tfoot>
-                        </form>
-                    </table>
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <button class="btn btn-success p-3 text-uppercase btn-lg"><i class="fas fa-save"></i> Submit Summary</button>
-                        </div>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <button name="purchaseSummary"
+                                    class="btn btn-success text-uppercase btn-lg"><i class="fas fa-save"></i> Save
+                                    Summary</button>
+                            </div>
                     </div>
-                </div>
+                    </div>
+                    
+                </form>
             </div>
 
         </div>
@@ -228,6 +277,7 @@
 </div>
 <!-- /.content-wrapper -->
 <script>
+
     function increaseValue() {
         var quantity = parseInt(document.getElementById('pd_quantity').value);
         var product_price = parseInt(document.getElementById('product_price').value);
@@ -252,36 +302,34 @@
     }
 </script>
 <script>
+    function CalcDiscount() {
+        var total_price = parseInt(document.getElementById('total_price').value);
+        var discount_amount = parseInt(document.getElementById('discount_amount').value);
 
-function CalcDiscount(){
-    var total_price = parseInt(document.getElementById('total_price').value);
-    var discount_amount = parseInt(document.getElementById('discount_amount').value);
+        if (discount_amount <= 0) {
+            $("#net_amount").val(total_price);
+        } else {
+            var net_amount = total_price - discount_amount;
+            if (discount_amount >= total_price) {
+                document.getElementById('net_amount').value = 0;
 
-    if (discount_amount <= 0) {
-        $("#net_amount").val(total_price);
-    }else{
-        var net_amount =  total_price - discount_amount;
-        if (discount_amount >= total_price) {
-            document.getElementById('net_amount').value = 0;
-
-        }else{
-            $("#net_amount").val(net_amount);
+            } else {
+                $("#net_amount").val(net_amount);
+            }
         }
     }
-}
 
-function payDiscount(){
-    var payment_amount = parseInt(document.getElementById('payment_amount').value);
-    var net_amount = parseInt(document.getElementById('net_amount').value);
-    var due_amount = parseInt(document.getElementById('due_amount').value);
+    function payDiscount() {
+        var payment_amount = parseInt(document.getElementById('payment_amount').value);
+        var net_amount = parseInt(document.getElementById('net_amount').value);
+        var due_amount = parseInt(document.getElementById('due_amount').value);
 
-    if (net_amount <= payment_amount) {
-        $("#due_amount").val(0);
-    }else{
-        var due_blances =  net_amount - payment_amount;
-        $("#due_amount").val(due_blances);
+        if (net_amount <= payment_amount) {
+            $("#due_amount").val(0);
+        } else {
+            var due_blances = net_amount - payment_amount;
+            $("#due_amount").val(due_blances);
+        }
     }
-}
-
 </script>
 <?php include './includes/footer.php'; ?>

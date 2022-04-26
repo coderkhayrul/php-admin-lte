@@ -423,13 +423,7 @@ function product_quantity_update($pd_product_barcode, $pd_quantity){
         $update_quantity = $quantity['product_quantity'] + $pd_quantity;
     }
     $command = "UPDATE tbl_product SET product_quantity='$update_quantity' WHERE product_barcode='$pd_product_barcode'";
-    $update = $db->query($command);
-
-    if ($update) {
-        $_SESSION['success_message'] = "Product Quantity Updated";
-    }else{
-        $_SESSION['error_message'] = "Product Quantity Updated Failed!";
-    }
+    $db->query($command);
 }
 
 function get_purchase_product($pd_company, $pd_date, $pd_invoice){

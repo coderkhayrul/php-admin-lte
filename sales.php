@@ -23,7 +23,9 @@
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-<?php
+    <?php
+
+    // Product Search Function
     if (isset($_POST['searchProduct'])) {
         $sale_branch = $_POST['sale_branch'];
         $sale_customer = $_POST['sale_customer'];
@@ -36,7 +38,28 @@
             $single_product = get_single_product_for_seles($sale_barcode);
         }
     }
-?>
+
+    // Product Sale Add Function
+    if (isset($_POST['insertProduct'])) {
+        $sale_branch = $_POST['sale_branch'];
+        $sale_customer = $_POST['sale_customer'];
+        $sale_date = $_POST['sale_date'];
+        $sale_barcode = $_POST['sale_barcode'];
+        // ------------------------------------
+        $sale_product_name = $_POST['sale_product'];
+        $sale_price = $_POST['sale_price'];
+        $sale_quantity = $_POST['sale_quantity'];
+        $sale_total_price = $_POST['sale_total_price'];
+
+        if (empty($sale_branch) || empty($sale_customer) || empty($sale_date) || empty($sale_barcode) || empty($sale_product_name) || empty($sale_price) || empty($sale_quantity) || empty($sale_total_price)) {
+            $_SESSION['error_message'] = "Please Fill all required fields!";
+        }else{
+            
+        }
+
+    }
+
+    ?>  
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
@@ -46,10 +69,10 @@
                         <label for="sale_branch" class="control-label">Branch Name</label>
                         <select name="sale_branch" id="" class="form-control">
                             <?php $sale_branch = get_branch_for_sale(); ?>
-                            <option value="<?php echo $sale_branch['branch_id']; ?>"><?php echo $sale_branch['branch_name']; ?></option>
+                            <option value="<?php echo $sale_branch['branch_id']; ?>">
+                                <?php echo $sale_branch['branch_name']; ?></option>
                         </select>
                     </div>
-
                     <div class="col-md-3">
                         <label for="" class="control-label">Customer Name</label>
                         <select name="sale_customer" id="" class="form-control">
@@ -57,7 +80,9 @@
                             <?php
                             $customers = get_customer_for_sale();
                             foreach ($customers as $customer) { ?>
-                            <option value="<?php echo $customer['customer_id']; ?>" <?php echo $customer['customer_id'] == $sale_customer ? "selected" : "" ?>><?php echo $customer['customer_name']; ?></option>
+                            <option value="<?php echo $customer['customer_id']; ?>"
+                                <?php echo $customer['customer_id'] == $sale_customer ? "selected" : "" ?>>
+                                <?php echo $customer['customer_name']; ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -67,41 +92,98 @@
                     </div>
                     <div class="col-md-2">
                         <label for="sale_barcode" class="control-label">Product Barcode</label>
-                        <input class="form-control" type="number" name="sale_barcode" placeholder="Enter Barcode" value="<?php echo $sale_barcode; ?>">
+                        <input class="form-control" type="number" name="sale_barcode" placeholder="Enter Barcode"
+                            value="<?php echo $sale_barcode; ?>">
                     </div>
                     <div class="col-md-2">
-                        <button name="searchProduct" class="btn btn-success" style="margin-top:30px"><i class="fas fa-search"></i> Product</button>
+                        <button name="searchProduct" class="btn btn-success" style="margin-top:30px"><i
+                                class="fas fa-search"></i> Product</button>
                     </div>
                 </div>
-
                 <div class="dropdown-divider my-2"></div>
-
                 <div class="row">
                     <div class="col-md-3">
                         <label for="sale_product" class="control-label">Product Name</label>
-                        <input type="text" name="sale_product" class="form-control" readonly value="<?php echo $single_product['product_name'];?>">
+                        <input type="text" name="sale_product" class="form-control" readonly
+                            value="<?php echo $single_product['product_name'];?>">
                     </div>
                     <div class="col-md-2">
                         <label for="sale_product" class="control-label">Product Price</label>
-                        <input id="product_price" type="number" min="0" name="sale_price" class="form-control" value="<?php echo $single_product['product_sell'];?>">
+                        <input id="product_price" type="number" min="0" name="sale_price" class="form-control"
+                            value="<?php echo $single_product['product_sell'];?>">
                     </div>
-
                     <div class="col-md-2 d-block">
                         <label for="sale_quantity" class="control-label">Quantity</label>
                         <div class="row d-flex">
-                        <input id="product_quantity" type="number" name="sale_quantity" class="form-control ml-2" style="width: 50%" min="0" value="0">
-                        <input onclick="increaseValue()" type="button" class="btn btn-sm btn-primary mx-2" value="+">
-                        <input onclick="decreaseValue()" type="button" class="btn btn-sm btn-primary mx-2" value="-">
+                            <input id="product_quantity" type="number" name="sale_quantity" class="form-control ml-2"
+                                style="width: 50%" min="0" value="0">
+                            <input onclick="increaseValue()" type="button" class="btn btn-sm btn-primary mx-2"
+                                value="+">
+                            <input onclick="decreaseValue()" type="button" class="btn btn-sm btn-primary mx-2"
+                                value="-">
                         </div>
                     </div>
                     <div class="col-md-2">
                         <label for="sale_total_price" class="control-label">Total Price</label>
-                        <input id="product_total_price" min="0" type="number" name="sale_total_price" class="form-control" readonly>
+                        <input id="product_total_price" min="0" type="number" name="sale_total_price"
+                            class="form-control" readonly>
                     </div>
-                    <div class="col-md-3 text-center">
-                        <button name="insertProduct" class="btn btn-success ml-4" style="margin-top:30px"><i class="fas fa-plus"></i> Product</button>
+                    <div class="col-md-3">
+                        <button name="insertProduct" class="btn btn-success ml-4" style="margin-top:30px"><i
+                                class="fas fa-plus"></i> Product</button>
                     </div>
                 </div>
+                <div class="row my-5">
+                    <div class="col-md-12">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>Invoice</th>
+                                    <th>Product Name</th>
+                                    <th>Date</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="text-center">
+                                    <td>Body</td>
+                                    <td>Body</td>
+                                    <td>Body</td>
+                                    <td>Body</td>
+                                    <td>Body</td>
+                                    <td>
+                                        <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-backspace"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <!-- <tfoot>
+                                <tr>
+                                    <th rowspan="1" colspan="1">
+                                        Working
+                                    </th>
+                                    <th rowspan="1" colspan="1">
+                                        Working
+                                    </th>
+                                    <th rowspan="1" colspan="1">
+                                        Working
+                                    </th>
+                                    <th rowspan="1" colspan="1">
+                                        Working
+                                    </th>
+                                    <th rowspan="1" colspan="1">
+                                        Working
+                                    </th>
+                                    <th rowspan="1" colspan="1">
+                                        Working
+                                    </th>
+                                </tr>
+                            </tfoot> -->
+                        </table>
+                    </div>
+                </div>
+
             </form>
         </div>
         <!--/. container-fluid -->

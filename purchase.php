@@ -75,6 +75,7 @@
                     if (empty($pd_branch) && empty($pd_company) && empty($pd_date) && empty($pd_invoice) && empty($pd_product_barcode) && empty($pd_product_price) && empty($pd_quantity) && empty($pd_total_price)) {
                         $_SESSION['error_message'] = "Please Fill all required fields!";
                     }else{
+                        product_quantity_update($pd_product_barcode, $pd_quantity);
                         insertPurchase($pd_branch, $pd_company, $pd_date, $pd_invoice, $pd_product_barcode, $pd_product_price, $pd_quantity, $pd_total_price);
                     }
                 }

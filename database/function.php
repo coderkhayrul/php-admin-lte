@@ -332,7 +332,7 @@ function product_insert($product_name, $product_barcode, $product_size, $product
 // Single Product Show
 function product_show($product_id){
     global $db;
-	$command ="SELECT *FROM tbl_product WHERE product_id='$product_id'";
+	$command ="SELECT * FROM tbl_product WHERE product_id='$product_id'";
 	$product = $db->query($command);
 	return $product;
 }
@@ -340,7 +340,7 @@ function product_show($product_id){
 // Product Edit
 function product_edit($product_id){
     global $db;
-	$command ="SELECT *FROM tbl_product WHERE product_id='$product_id'";
+	$command ="SELECT * FROM tbl_product WHERE product_id='$product_id'";
 	$product = $db->query($command);
 	return $product;
 }
@@ -415,6 +415,23 @@ function insertPurchase($pd_branch, $pd_company, $pd_date, $pd_invoice, $pd_prod
     }
 };
 
+function product_quantity_update($pd_product_barcode, $pd_quantity){
+    global $db;
+    $sql = "SELECT product_quantity FROM tbl_product WHERE product_barcode = '$pd_product_barcode'";
+    $get_quantity = $db->query($sql);
+    foreach($get_quantity as $quantity){
+        $update_quantity = $quantity['product_quantity'] + $pd_quantity;
+    }
+    $command = "UPDATE tbl_product SET product_quantity='$update_quantity' WHERE product_barcode='$pd_product_barcode'";
+    $update = $db->query($command);
+
+    if ($update) {
+        $_SESSION['success_message'] = "Product Quantity Updated";
+    }else{
+        $_SESSION['error_message'] = "Product Quantity Updated Failed!";
+    }
+}
+
 function get_purchase_product($pd_company, $pd_date, $pd_invoice){
     global $db;
     $command ="SELECT * FROM tbl_purchase_details WHERE pd_company ='$pd_company' AND pd_date = '$pd_date' AND pd_invoice = '$pd_invoice'";
@@ -456,4 +473,34 @@ function get_all_product_for_purchases($pd_branch){
 }
 // -------------------------------------------
 // ------------PURCHASE FUNCTION END ---------
+// -------------------------------------------
+
+
+//////////////////////////////////////////////
+
+// -------------------------------------------
+// ------------SALES FUNCTION START -------
+// -------------------------------------------
+
+function get_branch_for_sale() {
+    global $db;
+    $branch_id = $_SESSION['auth_branch'];
+    $command ="SELECT * FROM tbl_branch WHERE  branch_id ='$branch_id'";
+    $sale_branchs = $db->query($command);
+    foreach ($sale_branchs as $sale_branch) {
+        $sale_branch;
+    }
+    return $sale_branch;
+}
+
+function get_customer_for_sale() {
+    global $db;
+    $branch_id = $_SESSION['auth_branch'];
+    $command ="SELECT * FROM tbl_customer WHERE  customer_branch ='$branch_id'";
+    $sale_customers = $db->query($command);
+    return $sale_customers;
+}
+
+// -------------------------------------------
+// ------------SALES FUNCTION END ---------
 // -------------------------------------------

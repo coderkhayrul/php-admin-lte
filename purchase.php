@@ -195,7 +195,7 @@
                                             value="<?php echo $_SESSION['auth_name']; ?>" readonly>
 
                                         <input name="ps_employee" type="hidden" class="form-control"
-                                        value="<?php echo $_SESSION['auth_id']; ?>" readonly>
+                                            value="<?php echo $_SESSION['auth_id']; ?>" readonly>
                                     </th>
                                     <th rowspan="1" colspan="1">
                                         <label for="" class="control-label">Purchase From:</label>
@@ -252,21 +252,21 @@
                                     </th>
                                     <th rowspan="1" colspan="1">
                                         <label for="" class="control-label">Payment Amount:</label>
-                                        <input name="ps_payment_amount" id="payment_amount" type="number" class="form-control"
-                                            onkeyup="payDiscount();" min="0">
+                                        <input name="ps_payment_amount" id="payment_amount" type="number"
+                                            class="form-control" onkeyup="payDiscount();" min="0">
                                     </th>
                                 </tr>
                             </tfoot>
                         </table>
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                <button name="purchaseSummary"
-                                    class="btn btn-success text-uppercase btn-lg"><i class="fas fa-save"></i> Save
+                                <button name="purchaseSummary" class="btn btn-success text-uppercase btn-lg"><i
+                                        class="fas fa-save"></i> Save
                                     Summary</button>
                             </div>
+                        </div>
                     </div>
-                    </div>
-                    
+
                 </form>
             </div>
 
@@ -277,7 +277,6 @@
 </div>
 <!-- /.content-wrapper -->
 <script>
-
     function increaseValue() {
         var quantity = parseInt(document.getElementById('pd_quantity').value);
         var product_price = parseInt(document.getElementById('product_price').value);

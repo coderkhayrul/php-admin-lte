@@ -11,12 +11,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Purchase</h1>
+                    <h1 class="m-0">Sales</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Purchase</li>
+                        <li class="breadcrumb-item active">Sales</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -31,8 +31,9 @@
         $sale_customer = $_POST['sale_customer'];
         $sale_date = $_POST['sale_date'];
         $sale_barcode = $_POST['sale_barcode'];
+        $sale_invoice = $_POST['sale_invoice'];
 
-        if (empty($sale_branch) || empty($sale_barcode)) {
+        if (empty($sale_branch)) {
             $_SESSION['error_message'] = "Please Fill all required fields!";
         }else{
             $single_product = get_single_product_for_seles($sale_barcode);
@@ -41,7 +42,7 @@
 
     // Product Sale Add Function
     if (isset($_POST['insertProduct'])) {
-        $sale_branch = $_POST['sale_branch'];
+        $sale_branch = $_SESSION['auth_branch'];
         $sale_customer = $_POST['sale_customer'];
         $sale_date = $_POST['sale_date'];
         $sale_barcode = $_POST['sale_barcode'];
@@ -52,12 +53,11 @@
         $sale_quantity = $_POST['sale_quantity'];
         $sale_total_price = $_POST['sale_total_price'];
 
-        if (empty($sale_branch) || empty($sale_customer) || empty($sale_date) || empty($sale_barcode) || empty($sale_product_name) || empty($sale_price) || empty($sale_quantity) || empty($sale_total_price) || empty($sale_invoice)) {
+        if (empty($sale_branch) || empty($sale_customer) || empty($sale_date) || empty($sale_barcode) ||  empty($sale_price) || empty($sale_quantity) || empty($sale_total_price) || empty($sale_invoice)) {
             $_SESSION['error_message'] = "Please Fill all required fields!";
         }else{
-            // single_product_add_on_sale($sale_branch, $sale_customer, $sale_date, $sale_barcode, );
+            single_product_add_on_sales($sale_branch, $sale_customer, $sale_date, $sale_barcode, $sale_invoice, $sale_price, $sale_quantity, $sale_total_price);
         }
-
     }
 
     ?>  
@@ -136,48 +136,61 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr class="text-center">
-                                    <th>Invoice</th>
                                     <th>Product Name</th>
                                     <th>Date</th>
                                     <th>Price</th>
                                     <th>Quantity</th>
+                                    <th>Total Price</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="text-center">
-                                    <td>Body</td>
-                                    <td>Body</td>
-                                    <td>Body</td>
-                                    <td>Body</td>
-                                    <td>Body</td>
-                                    <td>
-                                        <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-backspace"></i></a>
-                                    </td>
-                                </tr>
+                                <?php 
+                                    $products= get_product_for_sales($sale_customer, $sale_date, $sale_invoice);
+                                    foreach($products as $product){ ?>
+                                    <tr class="text-center">
+                                        <td>
+                                        <?php 
+                                        $sale_products = get_product_name_for_sales();
+                                        foreach ($sale_products as $date){ ?>
+                                            <?php echo $product['sale_barcode'] == $date['product_barcode'] ? $date['product_name'] : '' ?>
+                                        <?php } ?>
+                                        </td>
+                                        <td><?php echo $product['sale_date']; ?></td>
+                                        <td><?php echo $product['sale_price']; ?> ৳</td>
+                                        <td><?php echo $product['sale_quantity']; ?></td>
+                                        <td><?php echo $product['sale_total_price']; ?> ৳</td>
+                                        <td>
+                                            <a href="#" class="btn btn-danger btn-sm"><i class="fas fa-backspace"></i></a>
+                                        </td>
+                                    </tr>
+                                    <?php }
+                                ?>
+                                
                             </tbody>
-                            <!-- <tfoot>
+                            <tfoot>
                                 <tr>
-                                    <th rowspan="1" colspan="1">
-                                        Working
+                                    <th rowspan="1" colspan="2">
+                                        <label for="" class="control-label">Sales By</label>
+                                        <input disabled type="text" class="form-control" readonly value="<?php echo $_SESSION['auth_name']; ?>">
                                     </th>
                                     <th rowspan="1" colspan="1">
-                                        Working
+                                        <label for="" class="control-label">Sales To</label>
+                                        <input disabled type="text" class="form-control" readonly>
+                                    </th>
+                                    <th rowspan="1" colspan="1" style="width: 20%;">
+                                        <label for="" class="control-label">Total Quantity</label>
+                                        <input type="number" class="form-control" readonly>
+                                    </th>
+                                    <th rowspan="1" colspan="1" style="width: 20%;">
+                                        <label for="" class="control-label">Total Amount</label>
+                                        <input type="number" class="form-control" readonly>
                                     </th>
                                     <th rowspan="1" colspan="1">
-                                        Working
-                                    </th>
-                                    <th rowspan="1" colspan="1">
-                                        Working
-                                    </th>
-                                    <th rowspan="1" colspan="1">
-                                        Working
-                                    </th>
-                                    <th rowspan="1" colspan="1">
-                                        Working
+                                        
                                     </th>
                                 </tr>
-                            </tfoot> -->
+                            </tfoot>
                         </table>
                     </div>
                 </div>

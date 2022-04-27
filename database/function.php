@@ -501,7 +501,6 @@ function get_single_product_for_seles($sale_barcode){
     $products = $db->query($command);
     if (!empty($products)) {
         foreach($products as $product){
-            
             if ($product) {
                 $product;
                 return $product;
@@ -511,6 +510,31 @@ function get_single_product_for_seles($sale_barcode){
     }
 }
 
+function single_product_add_on_sales($sale_branch, $sale_customer, $sale_date, $sale_barcode, $sale_invoice, $sale_price, $sale_quantity, $sale_total_price){
+    global $db;
+    $command ="INSERT INTO tbl_sales_details(sale_branch, sale_customer, sale_date, sale_barcode, sale_invoice, sale_price, sale_quantity, sale_total_price)
+    VALUES('$sale_branch', '$sale_customer', '$sale_date', '$sale_barcode', '$sale_invoice', '$sale_price', '$sale_quantity', '$sale_total_price')";
+    $insert = $db->query($command);
+    if ($insert) {
+        $_SESSION['success_message'] = "Product Added!";
+    }else{
+        $_SESSION['error_message'] = "Product Added Failed!";
+    }
+}
+
+function get_product_for_sales($sale_customer, $sale_date, $sale_invoice){
+    global $db;
+    $command ="SELECT * FROM tbl_sales_details WHERE sale_customer = '$sale_customer' AND sale_date = '$sale_date' AND sale_invoice = '$sale_invoice'";
+    $products = $db->query($command);
+    return $products;
+}
+function get_product_name_for_sales(){
+    global $db;
+    $sale_branch = $_SESSION['auth_branch'];
+    $command ="SELECT * FROM tbl_product WHERE product_branch = $sale_branch";
+    $products = $db->query($command);
+    return $products;
+}
 // -------------------------------------------
 // ------------SALES FUNCTION END ---------
 // -------------------------------------------

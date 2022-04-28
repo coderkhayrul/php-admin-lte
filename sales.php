@@ -24,6 +24,10 @@
     </div>
     <!-- /.content-header -->
     <?php
+    // Product Sale Summery Add Function
+    if (isset($_POST['saleSummery'])) {
+        
+    }
 
     // Product Search Function
     if (isset($_POST['searchProduct'])) {
@@ -180,11 +184,34 @@
                                     </th>
                                     <th rowspan="1" colspan="1" style="width: 20%;">
                                         <label for="" class="control-label">Total Quantity</label>
-                                        <input type="number" class="form-control" readonly>
+                                        <?php $sales = sales_total_quantity($sale_customer, $sale_date, $sale_invoice); ?>
+                                        <input type="number" class="form-control" readonly value="<?php echo $sales['quantity'] ?>">
                                     </th>
                                     <th rowspan="1" colspan="1" style="width: 20%;">
                                         <label for="" class="control-label">Total Amount</label>
-                                        <input type="number" class="form-control" readonly>
+                                        <?php $sales = sales_total_price($sale_customer, $sale_date, $sale_invoice); ?>
+                                        <input type="number" class="form-control" readonly value="<?php echo $sales['price'] ?>">
+                                    </th>
+                                    <th rowspan="1" colspan="1">
+                                        
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th rowspan="1" colspan="2">
+                                        <label for="" class="control-label">Discount Amount</label>
+                                        <input name="discount_amount" type="number" class="form-control">
+                                    </th>
+                                    <th rowspan="1" colspan="1">
+                                        <label for="" class="control-label">Net Amount</label>
+                                        <input name="net_amount" type="number" class="form-control" readonly>
+                                    </th>
+                                    <th rowspan="1" colspan="1" style="width: 20%;">
+                                        <label for="" class="control-label">Due Amount</label>
+                                        <input name="due_amount" type="number" class="form-control" readonly>
+                                    </th>
+                                    <th rowspan="1" colspan="1" style="width: 20%;">
+                                        <label for="" class="control-label">Due Date</label>
+                                        <input name="due_date" type="date" class="form-control">
                                     </th>
                                     <th rowspan="1" colspan="1">
                                         
@@ -194,7 +221,11 @@
                         </table>
                     </div>
                 </div>
-
+                <div class="row mb-3">
+                    <div class="col-md-12 text-center">
+                        <button name="saleSummery" class="btn btn-success btn-lg">Submit Sale</button>
+                    </div>
+                </div>
             </form>
         </div>
         <!--/. container-fluid -->

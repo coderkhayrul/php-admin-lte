@@ -535,6 +535,27 @@ function get_product_name_for_sales(){
     $products = $db->query($command);
     return $products;
 }
+
+function sales_total_quantity($sale_customer, $sale_date, $sale_invoice){
+    global $db;
+    $command ="SELECT SUM(sale_quantity) as quantity FROM tbl_sales_details WHERE sale_customer ='$sale_customer' AND sale_date = '$sale_date' AND sale_invoice = '$sale_invoice'";
+    $get_sales = $db->query($command);
+    foreach ($get_sales as $sale){
+        $sale;
+    }
+    return $sale;
+}
+
+function sales_total_price($sale_customer, $sale_date, $sale_invoice){
+    global $db;
+    $command ="SELECT SUM(sale_total_price) as price FROM tbl_sales_details WHERE sale_customer ='$sale_customer' AND sale_date = '$sale_date' AND sale_invoice = '$sale_invoice'";
+    $get_sales = $db->query($command);
+    foreach ($get_sales as $sale){
+        $sale;
+    }
+    return $sale;
+}
+
 // -------------------------------------------
 // ------------SALES FUNCTION END ---------
 // -------------------------------------------

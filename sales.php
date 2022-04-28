@@ -129,7 +129,7 @@
                     <div class="col-md-2">
                         <label for="sale_total_price" class="control-label">Total Price</label>
                         <input id="product_total_price" min="0" type="number" name="sale_total_price"
-                            class="form-control" readonly>
+                            class="form-control" readonly value="0">
                     </div>
                     <div class="col-md-3">
                         <button name="insertProduct" class="btn btn-success ml-4" style="margin-top:30px"><i
@@ -189,9 +189,9 @@
                                         <input type="number" class="form-control" readonly value="<?php echo $sales['quantity'] ?>">
                                     </th>
                                     <th rowspan="1" colspan="1" style="width: 20%;">
-                                        <label for="" class="control-label">Total Amount</label>
+                                        <label for="" class="control-label">Total Price</label>
                                         <?php $sales = sales_total_price($sale_customer, $sale_date, $sale_invoice); ?>
-                                        <input type="number" class="form-control" readonly value="<?php echo $sales['price'] ?>">
+                                        <input name="sale_total_price"  id="total_price" type="number" class="form-control" readonly value="<?php echo $sales['price'] ?>">
                                     </th>
                                     <th rowspan="1" colspan="1">
                                         
@@ -200,11 +200,11 @@
                                 <tr>
                                     <th rowspan="1" colspan="2">
                                         <label for="" class="control-label">Discount Amount</label>
-                                        <input name="discount_amount" type="number" class="form-control">
+                                        <input id="discount_amount" name= "sale_total_discount" onkeyup="CalcDiscount();" name="discount_amount" type="number" class="form-control">
                                     </th>
                                     <th rowspan="1" colspan="1">
                                         <label for="" class="control-label">Net Amount</label>
-                                        <input name="net_amount" type="number" class="form-control" readonly>
+                                        <input id="net_amount" name="sale_net_amount" type="number" class="form-control" readonly>
                                     </th>
                                     <th rowspan="1" colspan="1" style="width: 20%;">
                                         <label for="" class="control-label">Due Amount</label>
@@ -255,6 +255,23 @@
             document.getElementById('product_quantity').value = totalQuantity;
             var totalPrice = (product_price * totalQuantity);
             document.getElementById('product_total_price').value = totalPrice;
+        }
+    }
+
+    function CalcDiscount() {
+        var total_price = parseInt(document.getElementById('total_price').value);
+        var discount_amount = parseInt(document.getElementById('discount_amount').value);
+
+        if (discount_amount <= 0) {
+            $("#net_amount").val(total_price);
+        } else {
+            var net_amount = total_price - discount_amount;
+            if (discount_amount >= total_price) {
+                document.getElementById('net_amount').value = 0;
+
+            } else {
+                $("#net_amount").val(net_amount);
+            }
         }
     }
 </script>

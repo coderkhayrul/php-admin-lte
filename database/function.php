@@ -510,10 +510,10 @@ function get_single_product_for_seles($sale_barcode){
     }
 }
 
-function single_product_add_on_sales($sale_branch, $sale_customer, $sale_date, $sale_barcode, $sale_invoice, $sale_price, $sale_quantity, $sale_total_price){
+function single_product_add_on_sales($sale_branch, $sale_customer, $sale_date, $sale_barcode, $sale_invoice, $sale_price, $sale_quantity, $product_total_price){
     global $db;
     $command ="INSERT INTO tbl_sales_details(sale_branch, sale_customer, sale_date, sale_barcode, sale_invoice, sale_price, sale_quantity, sale_total_price)
-    VALUES('$sale_branch', '$sale_customer', '$sale_date', '$sale_barcode', '$sale_invoice', '$sale_price', '$sale_quantity', '$sale_total_price')";
+    VALUES('$sale_branch', '$sale_customer', '$sale_date', '$sale_barcode', '$sale_invoice', '$sale_price', '$sale_quantity', '$product_total_price')";
     $insert = $db->query($command);
     if ($insert) {
         $_SESSION['success_message'] = "Product Added!";

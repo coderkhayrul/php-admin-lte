@@ -26,7 +26,20 @@
     <?php
     // Product Sale Summery Add Function
     if (isset($_POST['saleSummery'])) {
-        
+        $sale_branch = $_SESSION['auth_branch'];
+        $sale_customer = $_POST['sale_customer'];
+        $sale_date = $_POST['sale_date'];
+        $sale_barcode = $_POST['sale_barcode'];
+        $sale_invoice = $_POST['sale_invoice'];
+         // ------------------------------------
+        $sale_product_name = $_POST['sale_product'];
+        $sale_price = $_POST['sale_price'];
+        $sale_quantity = $_POST['sale_quantity'];
+        $sale_total_price = $_POST['sale_total_price'];
+        $sale_total_discount = $_POST['sale_total_discount'];
+        $sale_net_amount = $_POST['sale_net_amount'];
+        $sale_due_amount = $_POST['sale_due_amount'];
+        $sale_due_date = $_POST['sale_due_date'];
     }
 
     // Product Search Function
@@ -46,22 +59,21 @@
 
     // Product Sale Add Function
     if (isset($_POST['insertProduct'])) {
-        $sale_branch = $_SESSION['auth_branch'];
-        $sale_customer = $_POST['sale_customer'];
-        $sale_date = $_POST['sale_date'];
-        $sale_barcode = $_POST['sale_barcode'];
-        $sale_invoice = $_POST['sale_invoice'];
+        echo " Data Show: <br>" . $sale_branch = $_SESSION['auth_branch'];
+        echo " Data Show: <br>" . $sale_customer = $_POST['sale_customer'];
+        echo " Data Show: <br>" . $sale_date = $_POST['sale_date'];
+        echo " Data Show: <br>" . $sale_barcode = $_POST['sale_barcode'];
+        echo " Data Show: <br>" . $sale_invoice = $_POST['sale_invoice'];
         // ------------------------------------
-        $sale_product_name = $_POST['sale_product'];
-        $sale_price = $_POST['sale_price'];
-        $sale_quantity = $_POST['sale_quantity'];
-        $sale_total_price = $_POST['sale_total_price'];
+        echo " Data Show: <br>" . $sale_price = $_POST['sale_price'];
+        echo " Data Show: <br>" . $sale_quantity = $_POST['sale_quantity'];
+        echo "<br> Total Price: <br>" . $product_total_price = $_POST['product_total_price'];
 
-        if (empty($sale_branch) || empty($sale_customer) || empty($sale_date) || empty($sale_barcode) ||  empty($sale_price) || empty($sale_quantity) || empty($sale_total_price) || empty($sale_invoice)) {
+        if (empty($sale_branch) || empty($sale_customer) || empty($sale_date) || empty($sale_barcode) ||  empty($sale_price) || empty($sale_quantity) || empty($product_total_price) || empty($sale_invoice)) {
             $_SESSION['error_message'] = "Please Fill all required fields!";
         }else{
             sales_product_quantity_update($sale_barcode, $sale_quantity);
-            single_product_add_on_sales($sale_branch, $sale_customer, $sale_date, $sale_barcode, $sale_invoice, $sale_price, $sale_quantity, $sale_total_price);
+            single_product_add_on_sales($sale_branch, $sale_customer, $sale_date, $sale_barcode, $sale_invoice, $sale_price, $sale_quantity, $product_total_price);
         }
     }
 
@@ -128,11 +140,16 @@
                     </div>
                     <div class="col-md-2">
                         <label for="sale_total_price" class="control-label">Total Price</label>
-                        <input id="product_total_price" min="0" type="number" name="sale_total_price"
-                            class="form-control" readonly value="0">
+                        <input id="product_total_price" min="0" type="number" name="product_total_price"
+                            class="form-control" readonly >
                     </div>
-                    <div class="col-md-3">
-                        <button name="insertProduct" class="btn btn-success ml-4" style="margin-top:30px"><i
+                    <div class="col-md-1">
+                        <label for="previous_quantity" class="control-label text-danger">Qty</label>
+                        <input disabled type="number" name="previous_quantity"
+                            class="form-control" readonly value="<?php echo $single_product['product_quantity'];?>">
+                    </div>
+                    <div class="col-md-2">
+                        <button name="insertProduct" class="btn btn-success" style="margin-top:30px"><i
                                 class="fas fa-plus"></i> Product</button>
                     </div>
                 </div>
@@ -208,11 +225,11 @@
                                     </th>
                                     <th rowspan="1" colspan="1" style="width: 20%;">
                                         <label for="" class="control-label">Due Amount</label>
-                                        <input name="due_amount" type="number" class="form-control" readonly>
+                                        <input id="due_amount" name="sale_due_amount" type="number" class="form-control">
                                     </th>
                                     <th rowspan="1" colspan="1" style="width: 20%;">
                                         <label for="" class="control-label">Due Date</label>
-                                        <input name="due_date" type="date" class="form-control">
+                                        <input name="sale_due_date" type="date" class="form-control">
                                     </th>
                                     <th rowspan="1" colspan="1">
                                         

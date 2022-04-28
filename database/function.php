@@ -556,6 +556,17 @@ function sales_total_price($sale_customer, $sale_date, $sale_invoice){
     return $sale;
 }
 
+function sales_product_quantity_update($sale_barcode, $sale_quantity){
+    global $db;
+    $sql = "SELECT product_quantity FROM tbl_product WHERE product_barcode = '$sale_barcode'";
+    $get_quantity = $db->query($sql);
+    foreach($get_quantity as $quantity){
+        $update_quantity = $quantity['product_quantity'] - $sale_quantity;
+    }
+    $command = "UPDATE tbl_product SET product_quantity='$update_quantity' WHERE product_barcode='$sale_barcode'";
+    $db->query($command);
+}
+
 // -------------------------------------------
 // ------------SALES FUNCTION END ---------
 // -------------------------------------------

@@ -60,6 +60,7 @@
         if (empty($sale_branch) || empty($sale_customer) || empty($sale_date) || empty($sale_barcode) ||  empty($sale_price) || empty($sale_quantity) || empty($sale_total_price) || empty($sale_invoice)) {
             $_SESSION['error_message'] = "Please Fill all required fields!";
         }else{
+            sales_product_quantity_update($sale_barcode, $sale_quantity);
             single_product_add_on_sales($sale_branch, $sale_customer, $sale_date, $sale_barcode, $sale_invoice, $sale_price, $sale_quantity, $sale_total_price);
         }
     }

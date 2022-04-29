@@ -567,6 +567,20 @@ function sales_product_quantity_update($sale_barcode, $sale_quantity){
     $db->query($command);
 }
 
+function sales_summery_add_product($sale_employe, $sale_branch, $sale_customer, $sale_date, 
+$sale_invoice, $sale_total_quantity, $sale_total_price, $sale_total_discount,  
+$sale_net_amount, $sale_due_amount, $sale_due_date){
+    global $db;
+    $command ="INSERT INTO tbl_sales_summary(ss_employe, ss_branch, ss_customer, ss_date, ss_invoice, ss_total_quantity, ss_total_price, ss_discount_amount, ss_net_amount, ss_due_amount, ss_due_date)
+    VALUES('$sale_employe', '$sale_branch', '$sale_customer', '$sale_date', '$sale_invoice', '$sale_total_quantity', '$sale_total_price', '$sale_total_discount', '$sale_net_amount', '$sale_due_amount', '$sale_due_date')";
+    $insert = $db->query($command);
+    if ($insert) {
+        $_SESSION['success_message'] = "Product Invoice Create Successfully!";
+    }else{
+        $_SESSION['error_message'] = "Product Invoice Genarated Failed!";
+    }
+}
+
 // -------------------------------------------
 // ------------SALES FUNCTION END ---------
 // -------------------------------------------

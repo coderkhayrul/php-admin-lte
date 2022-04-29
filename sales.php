@@ -26,20 +26,32 @@
     <?php
     // Product Sale Summery Add Function
     if (isset($_POST['saleSummery'])) {
+        $sale_employe = $_SESSION['auth_id'];
         $sale_branch = $_SESSION['auth_branch'];
         $sale_customer = $_POST['sale_customer'];
         $sale_date = $_POST['sale_date'];
-        $sale_barcode = $_POST['sale_barcode'];
         $sale_invoice = $_POST['sale_invoice'];
-         // ------------------------------------
-        $sale_product_name = $_POST['sale_product'];
-        $sale_price = $_POST['sale_price'];
-        $sale_quantity = $_POST['sale_quantity'];
+        // ------------------------------------
+        $sale_total_quantity = $_POST['sale_total_quantity'];
         $sale_total_price = $_POST['sale_total_price'];
         $sale_total_discount = $_POST['sale_total_discount'];
         $sale_net_amount = $_POST['sale_net_amount'];
         $sale_due_amount = $_POST['sale_due_amount'];
         $sale_due_date = $_POST['sale_due_date'];
+        // ----------------- Extra -------------
+        $sale_barcode = $_POST['sale_barcode'];
+
+        if (empty($sale_employe) || empty($sale_branch) || empty($sale_customer) || 
+            empty($sale_date) || empty($sale_invoice) || 
+            empty($sale_total_price) || empty($sale_total_discount) ||
+            empty($sale_net_amount) || empty($sale_due_amount) || empty($sale_due_date)){
+            $_SESSION['error_message'] = "Please Fill all required fields!";
+            
+        }else{
+            sales_summery_add_product($sale_employe, $sale_branch, $sale_customer, $sale_date, 
+            $sale_invoice, $sale_total_quantity, $sale_total_price, $sale_total_discount,  
+            $sale_net_amount, $sale_due_amount, $sale_due_date);
+        }
     }
 
     // Product Search Function
@@ -59,15 +71,15 @@
 
     // Product Sale Add Function
     if (isset($_POST['insertProduct'])) {
-        echo " Data Show: <br>" . $sale_branch = $_SESSION['auth_branch'];
-        echo " Data Show: <br>" . $sale_customer = $_POST['sale_customer'];
-        echo " Data Show: <br>" . $sale_date = $_POST['sale_date'];
-        echo " Data Show: <br>" . $sale_barcode = $_POST['sale_barcode'];
-        echo " Data Show: <br>" . $sale_invoice = $_POST['sale_invoice'];
+        $sale_branch = $_SESSION['auth_branch'];
+        $sale_customer = $_POST['sale_customer'];
+        $sale_date = $_POST['sale_date'];
+        $sale_barcode = $_POST['sale_barcode'];
+        $sale_invoice = $_POST['sale_invoice'];
         // ------------------------------------
-        echo " Data Show: <br>" . $sale_price = $_POST['sale_price'];
-        echo " Data Show: <br>" . $sale_quantity = $_POST['sale_quantity'];
-        echo "<br> Total Price: <br>" . $product_total_price = $_POST['product_total_price'];
+        $sale_price = $_POST['sale_price'];
+        $sale_quantity = $_POST['sale_quantity'];
+        $product_total_price = $_POST['product_total_price'];
 
         if (empty($sale_branch) || empty($sale_customer) || empty($sale_date) || empty($sale_barcode) ||  empty($sale_price) || empty($sale_quantity) || empty($product_total_price) || empty($sale_invoice)) {
             $_SESSION['error_message'] = "Please Fill all required fields!";
@@ -101,7 +113,7 @@
                         <input name="sale_date" type="date" class="form-control" value="<?php echo $sale_date; ?>">
                     </div>
                     <div class="col-md-3">
-                        <label for="sale_invoice" class="control-label">Sale Invocie</label>
+                        <label for="sale_invoice" class="control-label">Sale Invoice</label>
                         <input class="form-control" type="number" name="sale_invoice" min="1" value="<?php echo $sale_invoice; ?>" placeholder="Enter Invocie">
                         </select>
                     </div>
@@ -203,7 +215,7 @@
                                     <th rowspan="1" colspan="1" style="width: 20%;">
                                         <label for="" class="control-label">Total Quantity</label>
                                         <?php $sales = sales_total_quantity($sale_customer, $sale_date, $sale_invoice); ?>
-                                        <input type="number" class="form-control" readonly value="<?php echo $sales['quantity'] ?>">
+                                        <input name="sale_total_quantity" type="number" class="form-control" readonly value="<?php echo $sales['quantity'] ?>">
                                     </th>
                                     <th rowspan="1" colspan="1" style="width: 20%;">
                                         <label for="" class="control-label">Total Price</label>

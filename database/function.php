@@ -51,7 +51,8 @@ function get_login($em_phone, $password) {
 // Get All Employee
 function employee(){
     global $db;
-	$command ="SELECT * FROM tbl_employee";
+    $branch_id = $_SESSION['auth_branch'];
+	$command ="SELECT * FROM tbl_employee WHERE em_branch='$branch_id'";
 	$employee = $db->query($command);
 	return $employee;
 }
@@ -188,7 +189,8 @@ function branch_destroy($branch_id){
 // Get All Customer
 function customer(){
     global $db;
-	$command ="SELECT * FROM tbl_customer";
+    $branch_id = $_SESSION['auth_branch'];
+	$command ="SELECT * FROM tbl_customer WHERE customer_branch ='$branch_id'";
 	$customer = $db->query($command);
 	return $customer;
 };
@@ -582,5 +584,70 @@ $sale_net_amount, $sale_due_amount, $sale_due_date){
 }
 
 // -------------------------------------------
-// ------------SALES FUNCTION END ---------
+// ------------SALES FUNCTION END ------------
+// -------------------------------------------
+
+// ===========================================
+
+// -------------------------------------------
+// --------- DASHBOARD FUNCTION START --------
+// -------------------------------------------
+
+function customer_count_for_dashboard(){
+    global $db;
+    $branch_id = $_SESSION['auth_branch'];
+    $command ="SELECT count(*) AS count FROM tbl_customer WHERE customer_branch = '$branch_id'";
+    $customers = $db->query($command);
+    foreach ($customers as $customer){
+        $customer;
+    }
+    return $customer;
+}
+
+function employee_count_for_dashboard(){
+    global $db;
+    $branch_id = $_SESSION['auth_branch'];
+    $command ="SELECT count(*) AS count FROM tbl_employee WHERE em_branch = '$branch_id'";
+    $employees = $db->query($command);
+    foreach ($employees as $employee){
+        $employee;
+    }
+    return $employee;
+}
+
+function product_count_for_dashboard(){
+    global $db;
+    $branch_id = $_SESSION['auth_branch'];
+    $command ="SELECT count(*) AS count FROM tbl_product WHERE product_branch = '$branch_id'";
+    $products = $db->query($command);
+    foreach ($products as $product){
+        $product;
+    }
+    return $product;
+}
+
+function get_purchases_quantity_for_dashboard(){
+    global $db;
+    $branch_id = $_SESSION['auth_branch'];
+    $command ="SELECT SUM(ps_total_quantity) as qty FROM tbl_purchase_summary WHERE ps_branch = '$branch_id'";
+    $dashboard_qtys = $db->query($command);
+    foreach ($dashboard_qtys as $dashboard_qty){
+        $dashboard_qty;
+    }
+    return $dashboard_qty;
+}
+
+function get_sales_quantity_for_dashboard(){
+    global $db;
+    $branch_id = $_SESSION['auth_branch'];
+    $command ="SELECT SUM(ss_total_quantity) as qty FROM tbl_sales_summary WHERE ss_branch = '$branch_id'";
+    $dashboard_qtys = $db->query($command);
+    foreach ($dashboard_qtys as $dashboard_qty){
+        $dashboard_qty;
+    }
+    return $dashboard_qty;
+}
+
+// -------------------------------------------
+// --------- DASHBOARD FUNCTION END -----------
 // -------------------------------------------

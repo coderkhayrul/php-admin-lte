@@ -579,7 +579,7 @@ $sale_net_amount, $sale_due_amount, $sale_due_date){
     if ($insert) {
         $_SESSION['success_message'] = "Product Invoice Create Successfully!";
     }else{
-        $_SESSION['error_message'] = "Product Invoice Genarated Failed!";
+        $_SESSION['error_message'] = "Product Invoice Already Exists!";
     }
 }
 

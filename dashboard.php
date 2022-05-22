@@ -51,7 +51,7 @@ include './includes/sidebar.php';
                         <span class="info-box-icon bg-info elevation-1"><i class="fas fa-coins"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Cost</span>
+                            <span class="info-box-text">Costs</span>
                             <span class="info-box-number">
                                 20,000
                                 <small><i class="fas fa-dollar-sign"></i></small>

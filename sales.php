@@ -69,7 +69,7 @@
         }
     }
 
-    // Product Sale Add Function
+    // Single Product Sale Add Function
     if (isset($_POST['insertProduct'])) {
         $sale_branch = $_SESSION['auth_branch'];
         $sale_customer = $_POST['sale_customer'];

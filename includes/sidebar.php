@@ -188,6 +188,19 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-header">Reports</li>
+                <li class="nav-item">
+                    <a href="logout.php" class="nav-link">
+                        <i class="nav-icon fas fa-calendar-alt"></i>
+                        <p>Sales Reports</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="logout.php" class="nav-link">
+                        <i class="nav-icon fas fa-calendar-check"></i>
+                        <p>Purchase Reports</p>
+                    </a>
+                </li>
                 <li class="nav-header">General</li>
                 <li class="nav-item">
                     <a href="logout.php" class="nav-link">
